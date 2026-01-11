@@ -1,65 +1,63 @@
 // ========================================
-// FIREBASE CONFIGURATION & SYNC
+// FIREBASE CONFIGURATION & SYNC (REST API)
 // ========================================
-// Replace these with your Firebase credentials from Firebase Console
+// Using Firebase REST API instead of SDK for better compatibility
+// No SDK imports needed - just HTTP requests
 
 const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyDLYPxwDEuw1Bj7bWPfsmE-rMxyjzmMnF0",
-  authDomain: "ds-edutech.firebaseapp.com",
-  databaseURL: "https://ds-edutech-default-rtdb.firebaseio.com",
-  projectId: "ds-edutech",
-  storageBucket: "ds-edutech.firebasestorage.app",
-  messagingSenderId: "307546735156",
-  appId: "1:307546735156:web:1ab1dce3bb5c15ffc9c061"
+  databaseURL: "https://ds-edutech-default-rtdb.firebaseio.com"
 };
 
-// Initialize Firebase
-let db = null;
-let isFirebaseEnabled = false;
+let isFirebaseEnabled = true;
 
 function initializeFirebase() {
-  // Check if Firebase is available
-  if (typeof firebase === 'undefined') {
-    console.log('Firebase SDK not loaded - using localStorage fallback');
-    return false;
-  }
-
-  try {
-    firebase.initializeApp(FIREBASE_CONFIG);
-    db = firebase.database();
+  // Check if we have internet
+  if (navigator.onLine) {
+    console.log('✅ Firebase REST API initialized');
     isFirebaseEnabled = true;
-    console.log('✅ Firebase initialized successfully');
     return true;
-  } catch (error) {
-    console.error('❌ Firebase initialization error:', error);
+  } else {
+    console.log('📡 Offline mode - using localStorage only');
     isFirebaseEnabled = false;
     return false;
   }
 }
 
 // ========================================
-// HYBRID STORAGE SYSTEM
-// Uses Firebase for cloud sync + localStorage for offline
+// HYBRID STORAGE SYSTEM (REST API)
+// Uses Firebase REST API for cloud sync + localStorage for offline
 // ========================================
 
 // Save data to both localStorage and Firebase
 async function saveData(key, data) {
   try {
-    // Always save to localStorage first (fast)
+    // Always save to localStorage first (fast, offline works)
     localStorage.setItem(key, JSON.stringify(data));
+    console.log(`✅ Saved locally: ${key}`);
 
-    // Also save to Firebase if available (cloud backup)
-    if (isFirebaseEnabled && db) {
-      const ref = firebase.database().ref('data/' + key);
-      await ref.set({
-        value: data,
-        timestamp: new Date().toISOString(),
-        lastModified: Date.now()
+    // Also save to Firebase if online (cloud backup & sync)
+    if (isFirebaseEnabled && navigator.onLine) {
+      const firebaseUrl = `${FIREBASE_CONFIG.databaseURL}/data/${key}.json`;
+      
+      const response = await fetch(firebaseUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          value: data,
+          timestamp: new Date().toISOString(),
+          lastModified: Date.now()
+        })
       });
-      console.log(`✅ Synced to Firebase: ${key}`);
+
+      if (response.ok) {
+        console.log(`✅ Synced to Firebase: ${key}`);
+      } else {
+        console.log(`⚠️ Firebase sync pending (offline): ${key}`);
+      }
     }
   } catch (error) {
-    console.error(`Error saving ${key}:`, error);
+    console.log(`💾 Saved locally (will sync when online): ${key}`);
+    // Data still saved to localStorage, so no data loss
   }
 }
 
@@ -67,16 +65,18 @@ async function saveData(key, data) {
 async function loadData(key, defaultValue = null) {
   try {
     // Try Firebase first if available
-    if (isFirebaseEnabled && db) {
-      const ref = firebase.database().ref('data/' + key);
-      const snapshot = await ref.once('value');
+    if (isFirebaseEnabled && navigator.onLine) {
+      const firebaseUrl = `${FIREBASE_CONFIG.databaseURL}/data/${key}.json`;
       
-      if (snapshot.exists()) {
-        const firebaseData = snapshot.val();
-        // Update localStorage with Firebase data (keep in sync)
-        localStorage.setItem(key, JSON.stringify(firebaseData.value));
-        console.log(`📥 Loaded from Firebase: ${key}`);
-        return firebaseData.value;
+      const response = await fetch(firebaseUrl);
+      if (response.ok) {
+        const firebaseData = await response.json();
+        if (firebaseData && firebaseData.value !== undefined) {
+          // Update localStorage with Firebase data (keep in sync)
+          localStorage.setItem(key, JSON.stringify(firebaseData.value));
+          console.log(`📥 Loaded from Firebase: ${key}`);
+          return firebaseData.value;
+        }
       }
     }
 
@@ -89,58 +89,95 @@ async function loadData(key, defaultValue = null) {
 
     return defaultValue;
   } catch (error) {
-    console.error(`Error loading ${key}:`, error);
+    console.log(`📚 Using localStorage (Firebase unavailable): ${key}`);
     // Last resort: try localStorage
     const localData = localStorage.getItem(key);
     return localData ? JSON.parse(localData) : defaultValue;
   }
 }
 
-// Real-time listener for Firebase changes
+// Check Firebase for updates every 5 seconds (polling)
 function listenForChanges(key, callback) {
-  if (!isFirebaseEnabled || !db) {
-    console.log('Firebase not available - using polling fallback');
-    return;
-  }
+  let lastValue = null;
 
-  try {
-    const ref = firebase.database().ref('data/' + key);
-    ref.on('value', (snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val().value;
-        // Update localStorage when Firebase data changes
-        localStorage.setItem(key, JSON.stringify(data));
-        // Call the callback with new data
-        if (callback) callback(data);
-        console.log(`🔄 Real-time update received: ${key}`);
+  // Initial load
+  loadData(key).then(data => {
+    lastValue = JSON.stringify(data);
+    if (callback) callback(data);
+  });
+
+  // Poll for changes every 5 seconds
+  setInterval(async () => {
+    if (navigator.onLine) {
+      try {
+        const newData = await loadData(key);
+        const newValue = JSON.stringify(newData);
+        
+        if (newValue !== lastValue) {
+          lastValue = newValue;
+          if (callback) callback(newData);
+          console.log(`🔄 Update detected: ${key}`);
+        }
+      } catch (error) {
+        // Silent fail - continue polling
       }
-    });
-  } catch (error) {
-    console.error(`Error setting up listener for ${key}:`, error);
-  }
+    }
+  }, 5000); // Check every 5 seconds
 }
 
-// Override localStorage methods to use Firebase sync
+// Override localStorage.setItem to auto-sync to Firebase
 const originalSetItem = Storage.prototype.setItem;
 Storage.prototype.setItem = function(key, value) {
   // Always save to localStorage
   originalSetItem.call(this, key, value);
 
-  // Also sync to Firebase for admin-related keys
-  if (key.startsWith('admin') || key.startsWith('site') || key === 'adminCourses' || key === 'adminTestimonials' || key === 'adminContact' || key === 'adminContent' || key === 'adminHero' || key === 'adminStatistics' || key === 'editedWebsiteCourses') {
-    if (isFirebaseEnabled && db) {
+  // Auto-sync admin data to Firebase
+  if (key.startsWith('admin') || key.startsWith('site') || 
+      key === 'editedWebsiteCourses' || 
+      key === 'adminContact' || 
+      key === 'adminHero' ||
+      key === 'adminStatistics' ||
+      key === 'adminContent') {
+    
+    // Don't wait for Firebase - save locally first, sync async
+    if (isFirebaseEnabled && navigator.onLine) {
       try {
-        const ref = firebase.database().ref('data/' + key);
-        ref.set({
-          value: JSON.parse(value),
-          timestamp: new Date().toISOString()
+        const firebaseUrl = `${FIREBASE_CONFIG.databaseURL}/data/${key}.json`;
+        fetch(firebaseUrl, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            value: JSON.parse(value),
+            timestamp: new Date().toISOString()
+          })
+        }).catch(error => {
+          console.log(`Cloud sync pending: ${key}`);
         });
       } catch (error) {
-        console.error(`Firebase sync error for ${key}:`, error);
+        // Silent fail - data already in localStorage
       }
     }
   }
 };
+
+// Listen for online/offline changes
+window.addEventListener('online', () => {
+  console.log('🌐 Back online - Firebase syncing enabled');
+  isFirebaseEnabled = true;
+  // Sync any pending changes
+  const keys = Object.keys(localStorage);
+  keys.forEach(key => {
+    if (key.startsWith('admin')) {
+      const value = localStorage.getItem(key);
+      saveData(key, JSON.parse(value));
+    }
+  });
+});
+
+window.addEventListener('offline', () => {
+  console.log('📡 Offline - using localStorage only');
+  isFirebaseEnabled = false;
+});
 
 // Initialize Firebase when script loads
 if (document.readyState === 'loading') {
@@ -149,4 +186,4 @@ if (document.readyState === 'loading') {
   initializeFirebase();
 }
 
-console.log('Firebase config loaded');
+console.log('✅ Firebase config loaded (REST API mode)');
