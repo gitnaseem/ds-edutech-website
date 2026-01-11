@@ -184,19 +184,19 @@
     <div class="container">
       <div class="stats-grid">
         <div class="stat-item">
-          <h3>50,000+</h3>
+          <h3 id="statStudents">50,000+</h3>
           <p>Active Students</p>
         </div>
         <div class="stat-item">
-          <h3>200+</h3>
+          <h3 id="statInstructors">200+</h3>
           <p>Expert Instructors</p>
         </div>
         <div class="stat-item">
-          <h3>1000+</h3>
+          <h3 id="statLessons">1000+</h3>
           <p>Video Lessons</p>
         </div>
         <div class="stat-item">
-          <h3>95%</h3>
+          <h3 id="statSuccess">95%</h3>
           <p>Success Rate</p>
         </div>
       </div>
@@ -463,8 +463,67 @@
       if (secondaryBtnElement) secondaryBtnElement.textContent = hero.secondaryButtonText;
     }
 
+    // Load statistics from Firebase (with localStorage fallback)
+    async function loadStatistics() {
+      const defaultStats = {
+        students: '50,000+',
+        instructors: '200+',
+        lessons: '1000+',
+        successRate: '95%'
+      };
+
+      let stats = null;
+      
+      // Try Firebase first
+      try {
+        if (navigator.onLine) {
+          const firebaseUrl = 'https://ds-edutech-default-rtdb.firebaseio.com/data/adminStatistics.json';
+          const response = await fetch(firebaseUrl);
+          if (response.ok) {
+            const firebaseData = await response.json();
+            if (firebaseData && firebaseData.value) {
+              stats = firebaseData.value;
+              // Update localStorage with Firebase data
+              localStorage.setItem('adminStatistics', JSON.stringify(stats));
+              console.log('✅ Loaded statistics from Firebase');
+            }
+          }
+        }
+      } catch (error) {
+        console.log('⚠️ Firebase load failed for statistics, using localStorage');
+      }
+      
+      // Fallback to localStorage
+      if (!stats) {
+        const stored = localStorage.getItem('adminStatistics');
+        if (stored) {
+          stats = JSON.parse(stored);
+          console.log('📚 Loaded statistics from localStorage');
+        }
+      }
+      
+      // Use defaults if no data found
+      if (!stats) {
+        stats = defaultStats;
+      }
+
+      // Update statistics on page
+      const studentEl = document.getElementById('statStudents');
+      const instructorEl = document.getElementById('statInstructors');
+      const lessonEl = document.getElementById('statLessons');
+      const successEl = document.getElementById('statSuccess');
+
+      if (studentEl) studentEl.textContent = stats.students || defaultStats.students;
+      if (instructorEl) instructorEl.textContent = stats.instructors || defaultStats.instructors;
+      if (lessonEl) lessonEl.textContent = stats.lessons || defaultStats.lessons;
+      if (successEl) successEl.textContent = stats.successRate || defaultStats.successRate;
+    }
+
     // Load hero content when page loads
     document.addEventListener('DOMContentLoaded', loadHeroContent);
+    
+    // Load statistics when page loads
+    document.addEventListener('DOMContentLoaded', loadStatistics);
     
     // Apply saved section styles if the function exists (admin dashboard only)
     document.addEventListener('DOMContentLoaded', function() {
