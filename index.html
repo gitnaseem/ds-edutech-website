@@ -323,11 +323,50 @@
   <script src="js/firebase-config.js"></script>
   <script src="js/script.js"></script>
   <script>
-    // Apply saved theme colors on page load
-    const savedTheme = JSON.parse(localStorage.getItem('adminThemeColors'));
-    if (savedTheme) {
-      document.documentElement.style.setProperty('--primary-color', savedTheme.primary);
-      document.documentElement.style.setProperty('--secondary-color', savedTheme.secondary);
+    // Load theme colors from Firebase (with localStorage fallback)
+    async function loadThemeColors() {
+      let savedTheme = null;
+      
+      // Try Firebase first
+      try {
+        if (navigator.onLine) {
+          const firebaseUrl = 'https://ds-edutech-default-rtdb.firebaseio.com/data/adminThemeColors.json';
+          const response = await fetch(firebaseUrl);
+          if (response.ok) {
+            const firebaseData = await response.json();
+            if (firebaseData && firebaseData.value) {
+              savedTheme = firebaseData.value;
+              // Update localStorage with Firebase data
+              localStorage.setItem('adminThemeColors', JSON.stringify(savedTheme));
+              console.log('✅ Loaded theme colors from Firebase');
+            }
+          }
+        }
+      } catch (error) {
+        console.log('⚠️ Firebase load failed for theme, using localStorage');
+      }
+      
+      // Fallback to localStorage
+      if (!savedTheme) {
+        const stored = localStorage.getItem('adminThemeColors');
+        if (stored) {
+          savedTheme = JSON.parse(stored);
+          console.log('📚 Loaded theme colors from localStorage');
+        }
+      }
+      
+      // Apply theme colors
+      if (savedTheme) {
+        document.documentElement.style.setProperty('--primary-color', savedTheme.primary);
+        document.documentElement.style.setProperty('--secondary-color', savedTheme.secondary);
+      }
+    }
+    
+    // Load theme before rendering
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadThemeColors);
+    } else {
+      loadThemeColors();
     }
 
     // Apply saved text styles
@@ -365,8 +404,8 @@
 
     document.addEventListener('DOMContentLoaded', applyTextStyles);
 
-    // Load hero content from admin settings
-    function loadHeroContent() {
+    // Load hero content from Firebase (with localStorage fallback)
+    async function loadHeroContent() {
       const defaultHero = {
         title: 'Smart Learning for a Digital Future',
         subtitle: 'Master Science and Arts subjects with our interactive platform designed for board-level students. Learn from expert educators, practice with real exam questions, and achieve your academic goals.',
@@ -374,7 +413,35 @@
         secondaryButtonText: 'Explore More'
       };
 
-      const hero = JSON.parse(localStorage.getItem('adminHero')) || defaultHero;
+      let hero = null;
+      
+      // Try Firebase first
+      try {
+        if (navigator.onLine) {
+          const firebaseUrl = 'https://ds-edutech-default-rtdb.firebaseio.com/data/adminHero.json';
+          const response = await fetch(firebaseUrl);
+          if (response.ok) {
+            const firebaseData = await response.json();
+            if (firebaseData && firebaseData.value) {
+              hero = firebaseData.value;
+              // Update localStorage with Firebase data
+              localStorage.setItem('adminHero', JSON.stringify(hero));
+              console.log('✅ Loaded hero data from Firebase');
+            }
+          }
+        }
+      } catch (error) {
+        console.log('⚠️ Firebase load failed, using localStorage');
+      }
+      
+      // Fallback to localStorage
+      if (!hero) {
+        const stored = localStorage.getItem('adminHero');
+        hero = stored ? JSON.parse(stored) : defaultHero;
+        if (stored) {
+          console.log('📚 Loaded hero data from localStorage');
+        }
+      }
 
       // Update hero section
       const headingElement = document.getElementById('heroHeading');

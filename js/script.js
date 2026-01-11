@@ -1,6 +1,37 @@
+// ========== Load Data from Firebase (with localStorage fallback) ==========
+async function getDataFromFirebase(key) {
+  try {
+    if (navigator.onLine) {
+      const firebaseUrl = `https://ds-edutech-default-rtdb.firebaseio.com/data/${key}.json`;
+      const response = await fetch(firebaseUrl);
+      
+      if (response.ok) {
+        const firebaseData = await response.json();
+        if (firebaseData && firebaseData.value !== undefined) {
+          // Update localStorage with Firebase data
+          localStorage.setItem(key, JSON.stringify(firebaseData.value));
+          console.log(`✅ Loaded from Firebase: ${key}`);
+          return firebaseData.value;
+        }
+      }
+    }
+  } catch (error) {
+    console.log(`⚠️ Firebase load failed for ${key}:`, error);
+  }
+  
+  // Fallback to localStorage
+  const localData = localStorage.getItem(key);
+  if (localData) {
+    console.log(`📚 Using localStorage: ${key}`);
+    return JSON.parse(localData);
+  }
+  
+  return null;
+}
+
 // ========== Load Dynamic Content from Admin Panel ==========
-function loadDynamicContent() {
-  const adminContent = JSON.parse(localStorage.getItem('adminContent'));
+async function loadDynamicContent() {
+  const adminContent = await getDataFromFirebase('adminContent');
   
   if (adminContent) {
     // Update website name in header/logo

@@ -503,10 +503,37 @@
       { id: 'commercetest', title: 'Commerce Test Series', category: 'Commerce', level: 'ADVANCED', videos: 90, hours: 999 }
     ];
 
-    // Load custom courses from admin panel
-    function loadCustomCourses() {
+    // Load custom courses from Firebase (with localStorage fallback)
+    async function loadCustomCourses() {
       try {
-        const customCourses = JSON.parse(localStorage.getItem('adminCourses')) || [];
+        let customCourses = null;
+        
+        // Try Firebase first
+        try {
+          if (navigator.onLine) {
+            const firebaseUrl = 'https://ds-edutech-default-rtdb.firebaseio.com/data/adminCourses.json';
+            const response = await fetch(firebaseUrl);
+            if (response.ok) {
+              const firebaseData = await response.json();
+              if (firebaseData && firebaseData.value) {
+                customCourses = firebaseData.value;
+                // Update localStorage with Firebase data
+                localStorage.setItem('adminCourses', JSON.stringify(customCourses));
+                console.log('✅ Loaded courses from Firebase');
+              }
+            }
+          }
+        } catch (error) {
+          console.log('⚠️ Firebase load failed, using localStorage');
+        }
+        
+        // Fallback to localStorage
+        if (!customCourses) {
+          customCourses = JSON.parse(localStorage.getItem('adminCourses')) || [];
+          if (customCourses.length > 0) {
+            console.log('📚 Loaded courses from localStorage');
+          }
+        }
         
         if (customCourses.length === 0) {
           document.getElementById('customCoursesSection').style.display = 'none';
@@ -545,9 +572,33 @@
       }
     }
 
-    // Update website course data with edited versions from admin
-    function getEditedCourseData(courseId) {
-      const editedWebsiteCourses = JSON.parse(localStorage.getItem('editedWebsiteCourses')) || {};
+    // Update website course data with edited versions from Firebase (with localStorage fallback)
+    async function getEditedCourseData(courseId) {
+      let editedWebsiteCourses = null;
+      
+      // Try Firebase first
+      try {
+        if (navigator.onLine) {
+          const firebaseUrl = 'https://ds-edutech-default-rtdb.firebaseio.com/data/editedWebsiteCourses.json';
+          const response = await fetch(firebaseUrl);
+          if (response.ok) {
+            const firebaseData = await response.json();
+            if (firebaseData && firebaseData.value) {
+              editedWebsiteCourses = firebaseData.value;
+              // Update localStorage with Firebase data
+              localStorage.setItem('editedWebsiteCourses', JSON.stringify(editedWebsiteCourses));
+              console.log('✅ Loaded edited courses from Firebase');
+            }
+          }
+        }
+      } catch (error) {
+        console.log('⚠️ Firebase load failed for courses, using localStorage');
+      }
+      
+      // Fallback to localStorage
+      if (!editedWebsiteCourses) {
+        editedWebsiteCourses = JSON.parse(localStorage.getItem('editedWebsiteCourses')) || {};
+      }
       
       if (editedWebsiteCourses[courseId]) {
         return editedWebsiteCourses[courseId];

@@ -382,14 +382,40 @@
 
     document.addEventListener('DOMContentLoaded', applyTextStyles);
 
-    // Load About section dynamic content from localStorage
-    function loadAboutContent() {
-      const savedData = localStorage.getItem('adminAbout');
+    // Load About section dynamic content from Firebase (with localStorage fallback)
+    async function loadAboutContent() {
+      let aboutData = null;
       
-      if (savedData) {
+      // Try Firebase first
+      try {
+        if (navigator.onLine) {
+          const firebaseUrl = 'https://ds-edutech-default-rtdb.firebaseio.com/data/adminAbout.json';
+          const response = await fetch(firebaseUrl);
+          if (response.ok) {
+            const firebaseData = await response.json();
+            if (firebaseData && firebaseData.value) {
+              aboutData = firebaseData.value;
+              // Update localStorage with Firebase data
+              localStorage.setItem('adminAbout', JSON.stringify(aboutData));
+              console.log('✅ Loaded about data from Firebase');
+            }
+          }
+        }
+      } catch (error) {
+        console.log('⚠️ Firebase load failed, using localStorage');
+      }
+      
+      // Fallback to localStorage
+      if (!aboutData) {
+        const savedData = localStorage.getItem('adminAbout');
+        if (savedData) {
+          aboutData = JSON.parse(savedData);
+          console.log('📚 Loaded about data from localStorage');
+        }
+      }
+      
+      if (aboutData) {
         try {
-          const aboutData = JSON.parse(savedData);
-          
           // Update Story
           if (aboutData.story) {
             document.getElementById('aboutStoryDisplay').textContent = aboutData.story;
