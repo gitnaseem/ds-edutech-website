@@ -300,6 +300,7 @@
     </div>
   </footer>
 
+  <script src="js/firebase-config.js"></script>
   <script src="js/script.js"></script>
   <script>
     // Apply saved theme colors on page load
@@ -357,7 +358,31 @@
       }
     }
 
-    function handleContactForm(event) {
+    // Load contact data from Firebase (with localStorage fallback)
+    async function getContactData() {
+      try {
+        // Try Firebase first
+        if (navigator.onLine) {
+          const firebaseUrl = "https://ds-edutech-default-rtdb.firebaseio.com/data/adminContact.json";
+          const response = await fetch(firebaseUrl);
+          if (response.ok) {
+            const firebaseData = await response.json();
+            if (firebaseData && firebaseData.value) {
+              // Update localStorage with Firebase data
+              localStorage.setItem('adminContact', JSON.stringify(firebaseData.value));
+              return firebaseData.value;
+            }
+          }
+        }
+      } catch (error) {
+        console.log('Firebase unavailable, using localStorage');
+      }
+      
+      // Fallback to localStorage
+      return JSON.parse(localStorage.getItem('adminContact')) || {};
+    }
+
+    async function handleContactForm(event) {
       event.preventDefault();
       
       const name = document.getElementById('name').value;
@@ -366,8 +391,8 @@
       const subject = document.getElementById('subject').value;
       const message = document.getElementById('message').value;
 
-      // Get your WhatsApp number from admin settings
-      const contactData = JSON.parse(localStorage.getItem('adminContact')) || {};
+      // Get your WhatsApp number from admin settings (Firebase)
+      const contactData = await getContactData();
       const whatsappNumber = contactData.phone || '+918000123456'; // Fallback to default
       
       // Clean phone number: remove spaces, hyphens, add country code if needed
@@ -408,9 +433,9 @@
       }, 500);
     }
 
-    // Load contact information from localStorage
-    function loadContactContent() {
-      const contactData = JSON.parse(localStorage.getItem('adminContact'));
+    // Load contact information from Firebase (with localStorage fallback)
+    async function loadContactContent() {
+      const contactData = await getContactData();
       
       if (contactData) {
         // Update email links
@@ -483,8 +508,8 @@
     });
 
     // WhatsApp Floating Button Functionality
-    function openWhatsApp() {
-      const contactData = JSON.parse(localStorage.getItem('adminContact')) || {};
+    async function openWhatsApp() {
+      const contactData = await getContactData();
       const phoneNumber = contactData.phone || '+918000123456'; // Fallback to default
       
       // Clean phone number: remove spaces, hyphens, add country code if needed

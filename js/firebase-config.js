@@ -33,11 +33,12 @@ async function saveData(key, data) {
   try {
     // Always save to localStorage first (fast, offline works)
     localStorage.setItem(key, JSON.stringify(data));
-    console.log(`✅ Saved locally: ${key}`);
+    console.log(`✅ Saved locally: ${key}`, data);
 
     // Also save to Firebase if online (cloud backup & sync)
     if (isFirebaseEnabled && navigator.onLine) {
       const firebaseUrl = `${FIREBASE_CONFIG.databaseURL}/data/${key}.json`;
+      console.log(`📤 Syncing to Firebase: ${firebaseUrl}`);
       
       const response = await fetch(firebaseUrl, {
         method: 'PUT',
@@ -49,14 +50,16 @@ async function saveData(key, data) {
         })
       });
 
+      console.log(`📊 Firebase sync response: ${response.status}`);
+      
       if (response.ok) {
         console.log(`✅ Synced to Firebase: ${key}`);
       } else {
-        console.log(`⚠️ Firebase sync pending (offline): ${key}`);
+        console.log(`⚠️ Firebase sync failed: ${response.status} ${response.statusText}`);
       }
     }
   } catch (error) {
-    console.log(`💾 Saved locally (will sync when online): ${key}`);
+    console.log(`💾 Saved locally (will sync when online): ${key}`, error);
     // Data still saved to localStorage, so no data loss
   }
 }
@@ -67,16 +70,23 @@ async function loadData(key, defaultValue = null) {
     // Try Firebase first if available
     if (isFirebaseEnabled && navigator.onLine) {
       const firebaseUrl = `${FIREBASE_CONFIG.databaseURL}/data/${key}.json`;
+      console.log(`🔍 Fetching from Firebase: ${firebaseUrl}`);
       
       const response = await fetch(firebaseUrl);
+      console.log(`📊 Firebase response status: ${response.status}`);
+      
       if (response.ok) {
         const firebaseData = await response.json();
+        console.log(`📥 Firebase data received for ${key}:`, firebaseData);
+        
         if (firebaseData && firebaseData.value !== undefined) {
           // Update localStorage with Firebase data (keep in sync)
           localStorage.setItem(key, JSON.stringify(firebaseData.value));
-          console.log(`📥 Loaded from Firebase: ${key}`);
+          console.log(`✅ Loaded from Firebase: ${key}`);
           return firebaseData.value;
         }
+      } else {
+        console.log(`⚠️ Firebase response not ok: ${response.status} ${response.statusText}`);
       }
     }
 
@@ -87,9 +97,10 @@ async function loadData(key, defaultValue = null) {
       return JSON.parse(localData);
     }
 
+    console.log(`⚠️ No data found for key: ${key}`);
     return defaultValue;
   } catch (error) {
-    console.log(`📚 Using localStorage (Firebase unavailable): ${key}`);
+    console.log(`❌ Error loading ${key}:`, error);
     // Last resort: try localStorage
     const localData = localStorage.getItem(key);
     return localData ? JSON.parse(localData) : defaultValue;
