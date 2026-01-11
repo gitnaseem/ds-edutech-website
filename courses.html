@@ -38,304 +38,19 @@
   <!-- Courses Section -->
   <section class="section">
     <div class="container">
-      <h2 class="section-title">Science Stream Courses</h2>
-      <div class="grid">
-        <!-- Physics Course -->
-        <div class="course-card">
-          <div class="course-image">📐</div>
-          <div class="course-content">
-            <span class="course-level">BEGINNER</span>
-            <h3>Physics Fundamentals</h3>
-            <p>Master mechanics, thermodynamics, waves, and electricity through interactive simulations and real-world examples.</p>
-            <div class="course-meta">
-              <span>📚 45 Videos</span>
-              <span>⏱️ 40 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Chemistry Course -->
-        <div class="course-card">
-          <div class="course-image">⚗️</div>
-          <div class="course-content">
-            <span class="course-level">BEGINNER</span>
-            <h3>Chemistry Concepts</h3>
-            <p>Understand atomic structure, bonding, reactions, and organic chemistry with detailed molecular models and animations.</p>
-            <div class="course-meta">
-              <span>📚 50 Videos</span>
-              <span>⏱️ 45 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Biology Course -->
-        <div class="course-card">
-          <div class="course-image">🧬</div>
-          <div class="course-content">
-            <span class="course-level">BEGINNER</span>
-            <h3>Biology & Life Sciences</h3>
-            <p>Explore cell biology, genetics, human physiology, and ecology with 3D models and comprehensive explanations.</p>
-            <div class="course-meta">
-              <span>📚 48 Videos</span>
-              <span>⏱️ 42 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Mathematics for Science -->
-        <div class="course-card">
-          <div class="course-image">∑</div>
-          <div class="course-content">
-            <span class="course-level">INTERMEDIATE</span>
-            <h3>Mathematics for Science</h3>
-            <p>Advanced calculus, vectors, and statistical methods essential for science subjects and competitive exams.</p>
-            <div class="course-meta">
-              <span>📚 52 Videos</span>
-              <span>⏱️ 48 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Lab Simulations -->
-        <div class="course-card">
-          <div class="course-image">🔬</div>
-          <div class="course-content">
-            <span class="course-level">INTERMEDIATE</span>
-            <h3>Lab Simulations</h3>
-            <p>Perform virtual experiments safely. Practice important lab procedures with interactive simulations and video guides.</p>
-            <div class="course-meta">
-              <span>📚 30 Labs</span>
-              <span>⏱️ 25 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Exam Practice Tests -->
-        <div class="course-card">
-          <div class="course-image">📝</div>
-          <div class="course-content">
-            <span class="course-level">ADVANCED</span>
-            <h3>Science Exam Practice</h3>
-            <p>Comprehensive test series with previous year papers, mock exams, and detailed solutions. Track your progress.</p>
-            <div class="course-meta">
-              <span>📚 100+ Tests</span>
-              <span>⏱️ Unlimited</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
+      <h2 class="section-title">Select Your Class</h2>
+      <p class="section-subtitle">Choose your class to view all available courses</p>
+      
+      <!-- Class Filter Buttons -->
+      <div style="display: flex; justify-content: center; gap: 1rem; margin: 2rem 0; flex-wrap: wrap;">
+        <button class="admin-button" onclick="filterCoursesByClass('9th Class')" id="filter9" style="padding: 0.8rem 1.5rem; background: #0066cc;">9th Class</button>
+        <button class="admin-button secondary" onclick="filterCoursesByClass('10th Class')" id="filter10" style="padding: 0.8rem 1.5rem;">10th Class</button>
+        <button class="admin-button secondary" onclick="filterCoursesByClass('11th Class')" id="filter11" style="padding: 0.8rem 1.5rem;">11th Class</button>
+        <button class="admin-button secondary" onclick="filterCoursesByClass('12th Class')" id="filter12" style="padding: 0.8rem 1.5rem;">12th Class</button>
       </div>
-    </div>
-  </section>
 
-  <!-- Arts Courses -->
-  <section class="section" style="background-color: var(--light-color);">
-    <div class="container">
-      <h2 class="section-title">Arts Stream Courses</h2>
-      <div class="grid">
-        <!-- History Course -->
-        <div class="course-card">
-          <div class="course-image">🏛️</div>
-          <div class="course-content">
-            <span class="course-level">BEGINNER</span>
-            <h3>History & Culture</h3>
-            <p>Journey through ancient, medieval, and modern history with engaging narratives, timelines, and historical context.</p>
-            <div class="course-meta">
-              <span>📚 55 Videos</span>
-              <span>⏱️ 50 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Geography Course -->
-        <div class="course-card">
-          <div class="course-image">🌍</div>
-          <div class="course-content">
-            <span class="course-level">BEGINNER</span>
-            <h3>Geography Insights</h3>
-            <p>Master physical and human geography with interactive maps, satellite imagery, and comprehensive regional analysis.</p>
-            <div class="course-meta">
-              <span>📚 48 Videos</span>
-              <span>⏱️ 45 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Economics Course -->
-        <div class="course-card">
-          <div class="course-image">💰</div>
-          <div class="course-content">
-            <span class="course-level">INTERMEDIATE</span>
-            <h3>Economics Basics</h3>
-            <p>Understand micro and macro-economics with real-world examples, case studies, and practical applications.</p>
-            <div class="course-meta">
-              <span>📚 42 Videos</span>
-              <span>⏱️ 38 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- English Literature -->
-        <div class="course-card">
-          <div class="course-image">📖</div>
-          <div class="course-content">
-            <span class="course-level">BEGINNER</span>
-            <h3>English Literature</h3>
-            <p>Analyze classic and contemporary literature with detailed chapter summaries, character analysis, and exam tips.</p>
-            <div class="course-meta">
-              <span>📚 60 Videos</span>
-              <span>⏱️ 52 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Political Science -->
-        <div class="course-card">
-          <div class="course-image">🏦</div>
-          <div class="course-content">
-            <span class="course-level">INTERMEDIATE</span>
-            <h3>Political Science</h3>
-            <p>Explore governance, constitutions, and political systems with current affairs updates and analytical thinking.</p>
-            <div class="course-meta">
-              <span>📚 50 Videos</span>
-              <span>⏱️ 45 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Arts Exam Practice -->
-        <div class="course-card">
-          <div class="course-image">✏️</div>
-          <div class="course-content">
-            <span class="course-level">ADVANCED</span>
-            <h3>Arts Exam Practice</h3>
-            <p>Extensive mock exams and practice papers with detailed answer keys. Improve essay writing and analysis skills.</p>
-            <div class="course-meta">
-              <span>📚 80+ Tests</span>
-              <span>⏱️ Unlimited</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Commerce Courses -->
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Commerce Stream Courses</h2>
-      <div class="grid">
-        <!-- Accountancy -->
-        <div class="course-card">
-          <div class="course-image">📊</div>
-          <div class="course-content">
-            <span class="course-level">BEGINNER</span>
-            <h3>Accountancy</h3>
-            <p>Master accounting principles, bookkeeping, financial statements, and auditing with practical examples and case studies.</p>
-            <div class="course-meta">
-              <span>📚 58 Videos</span>
-              <span>⏱️ 50 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Business Studies -->
-        <div class="course-card">
-          <div class="course-image">💼</div>
-          <div class="course-content">
-            <span class="course-level">BEGINNER</span>
-            <h3>Business Studies</h3>
-            <p>Understand business organization, management, marketing, and entrepreneurship with real company case studies.</p>
-            <div class="course-meta">
-              <span>📚 52 Videos</span>
-              <span>⏱️ 48 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Commerce Economics -->
-        <div class="course-card">
-          <div class="course-image">📈</div>
-          <div class="course-content">
-            <span class="course-level">INTERMEDIATE</span>
-            <h3>Commerce Economics</h3>
-            <p>Advanced economics focusing on business cycles, markets, and policy with numerical problem solving.</p>
-            <div class="course-meta">
-              <span>📚 48 Videos</span>
-              <span>⏱️ 44 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Commerce Mathematics -->
-        <div class="course-card">
-          <div class="course-image">🔢</div>
-          <div class="course-content">
-            <span class="course-level">INTERMEDIATE</span>
-            <h3>Commerce Mathematics</h3>
-            <p>Mathematics for commerce including calculus, statistics, and financial mathematics with business applications.</p>
-            <div class="course-meta">
-              <span>📚 55 Videos</span>
-              <span>⏱️ 50 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Business Case Studies -->
-        <div class="course-card">
-          <div class="course-image">🎯</div>
-          <div class="course-content">
-            <span class="course-level">ADVANCED</span>
-            <h3>Case Studies</h3>
-            <p>Real-world business cases and scenarios. Develop decision-making skills for competitive exams and business.</p>
-            <div class="course-meta">
-              <span>📚 35 Cases</span>
-              <span>⏱️ 32 Hours</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-
-        <!-- Commerce Exam Series -->
-        <div class="course-card">
-          <div class="course-image">🏆</div>
-          <div class="course-content">
-            <span class="course-level">ADVANCED</span>
-            <h3>Commerce Test Series</h3>
-            <p>Comprehensive test series with board papers, mock exams, and detailed solutions. Master the exam pattern.</p>
-            <div class="course-meta">
-              <span>📚 90+ Tests</span>
-              <span>⏱️ Unlimited</span>
-            </div>
-            <button class="btn-learn">Enroll Now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Custom Courses Section (Added via Admin Panel) -->
-  <section class="section" id="customCoursesSection" style="display: none; background-color: var(--light-color);">
-    <div class="container">
-      <h2 class="section-title">✨ New Courses</h2>
-      <p class="section-subtitle">Recently added courses by our admin team</p>
-      <div class="grid" id="customCoursesList">
-        <!-- Custom courses will be loaded here -->
+      <div id="coursesList" class="grid">
+        <p style="text-align: center; grid-column: 1 / -1; padding: 2rem; color: #999;">Loading courses...</p>
       </div>
     </div>
   </section>
@@ -608,10 +323,87 @@
       return websiteCoursesData.find(c => c.id === courseId);
     }
 
+    // Filter and display courses by class
+    async function filterCoursesByClass(className) {
+      // Update button styles
+      document.getElementById('filter9').style.background = className === '9th Class' ? '#0066cc' : 'white';
+      document.getElementById('filter9').style.color = className === '9th Class' ? 'white' : '#333';
+      document.getElementById('filter10').style.background = className === '10th Class' ? '#0066cc' : 'white';
+      document.getElementById('filter10').style.color = className === '10th Class' ? 'white' : '#333';
+      document.getElementById('filter11').style.background = className === '11th Class' ? '#0066cc' : 'white';
+      document.getElementById('filter11').style.color = className === '11th Class' ? 'white' : '#333';
+      document.getElementById('filter12').style.background = className === '12th Class' ? '#0066cc' : 'white';
+      document.getElementById('filter12').style.color = className === '12th Class' ? 'white' : '#333';
+      
+      // Load courses from Firebase/localStorage
+      let courses = null;
+      
+      try {
+        if (navigator.onLine) {
+          const firebaseUrl = 'https://ds-edutech-default-rtdb.firebaseio.com/data/adminCourses.json';
+          const response = await fetch(firebaseUrl);
+          if (response.ok) {
+            const firebaseData = await response.json();
+            if (firebaseData && firebaseData.value) {
+              courses = firebaseData.value;
+              localStorage.setItem('adminCourses', JSON.stringify(courses));
+            }
+          }
+        }
+      } catch (error) {
+        console.log('⚠️ Firebase load failed, using localStorage');
+      }
+      
+      // Fallback to localStorage
+      if (!courses) {
+        courses = JSON.parse(localStorage.getItem('adminCourses')) || [];
+      }
+      
+      // Filter courses by selected class
+      const filteredCourses = courses.filter(c => c.category === className);
+      
+      // Render courses to coursesList container
+      const coursesList = document.getElementById('coursesList');
+      
+      if (filteredCourses.length === 0) {
+        coursesList.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; padding: 2rem; color: #999;">No courses available for this class yet.</p>';
+        return;
+      }
+      
+      let html = '';
+      filteredCourses.forEach(course => {
+        const imageContent = course.image 
+          ? `<img src="${course.image}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">`
+          : `<div class="course-image">📚</div>`;
+        
+        html += `
+          <div class="course-card">
+            ${imageContent}
+            <div class="course-content">
+              <span class="course-level">${course.level}</span>
+              <h3>${course.title}</h3>
+              <p>${course.description}</p>
+              <div class="course-meta">
+                <span>📚 ${course.videos} Videos</span>
+                <span>⏱️ ${course.hours} Hours</span>
+              </div>
+              <button class="btn-learn">Enroll Now</button>
+            </div>
+          </div>
+        `;
+      });
+      
+      coursesList.innerHTML = html;
+    }
+
     // Load courses when page loads
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadCustomCourses);
+      document.addEventListener('DOMContentLoaded', function() {
+        filterCoursesByClass('9th Class');
+        loadCustomCourses();
+      });
     } else {
+      filterCoursesByClass('9th Class');
       loadCustomCourses();
     }
 

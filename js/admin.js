@@ -420,11 +420,13 @@ function addCourse() {
   let courses = JSON.parse(localStorage.getItem('adminCourses')) || [];
 
   // Add new course with image
+  // category = Class (9th Class, 10th Class, 11th Class, 12th Class)
+  // level = Subject (Science, Arts, Commerce, General)
   const newCourse = {
     id: Date.now(),
     title: title,
-    category: category,
-    level: level,
+    category: category,  // Class: 9th Class, 10th Class, 11th Class, 12th Class
+    level: level,        // Subject: Science, Arts, Commerce, General
     description: description,
     videos: parseInt(videos),
     hours: parseInt(hours),
@@ -435,7 +437,13 @@ function addCourse() {
   courses.push(newCourse);
   
   try {
-    localStorage.setItem('adminCourses', JSON.stringify(courses));
+    // Use Firebase sync function for cloud backup
+    if (typeof saveData === 'function') {
+      saveData('adminCourses', courses);
+    } else {
+      // Fallback to localStorage only
+      localStorage.setItem('adminCourses', JSON.stringify(courses));
+    }
     console.log('Course saved:', newCourse);
   } catch (error) {
     if (error.name === 'QuotaExceededError') {
@@ -448,8 +456,8 @@ function addCourse() {
 
   // Clear form and global variable
   document.getElementById('courseTitle').value = '';
-  document.getElementById('courseCategory').value = 'Science';
-  document.getElementById('courseLevel').value = 'BEGINNER';
+  document.getElementById('courseCategory').value = '9th Class';
+  document.getElementById('courseLevel').value = 'Science';
   document.getElementById('courseDescription').value = '';
   document.getElementById('courseVideos').value = '';
   document.getElementById('courseHours').value = '';
@@ -458,7 +466,7 @@ function addCourse() {
   document.getElementById('courseImageStatus').innerHTML = '';
   courseImageData = null;
 
-  showMessage('success', 'Course added successfully! Image: ' + (newCourse.image ? '✓ Uploaded' : '✗ No image'));
+  showMessage('success', 'Course added successfully! ✓ ' + (newCourse.image ? 'Image uploaded' : 'No image'));
   loadCourses();
 }
 
@@ -494,7 +502,14 @@ function deleteCourse(id) {
 
   let courses = JSON.parse(localStorage.getItem('adminCourses')) || [];
   courses = courses.filter(course => course.id !== id);
-  localStorage.setItem('adminCourses', JSON.stringify(courses));
+  
+  // Use Firebase sync function for cloud backup
+  if (typeof saveData === 'function') {
+    saveData('adminCourses', courses);
+  } else {
+    // Fallback to localStorage only
+    localStorage.setItem('adminCourses', JSON.stringify(courses));
+  }
 
   showMessage('success', 'Course deleted successfully!');
   loadCourses();
