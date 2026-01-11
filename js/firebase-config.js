@@ -142,14 +142,20 @@ Storage.prototype.setItem = function(key, value) {
   // Always save to localStorage
   originalSetItem.call(this, key, value);
 
-  // Auto-sync admin data to Firebase
-  if (key.startsWith('admin') || key.startsWith('site') || 
-      key === 'editedWebsiteCourses' || 
-      key === 'adminContact' || 
-      key === 'adminHero' ||
-      key === 'adminStatistics' ||
-      key === 'adminContent') {
-    
+  // Auto-sync ALL admin/site data to Firebase
+  // List of keys that should sync to Firebase
+  const keysToSync = [
+    // Admin data
+    'adminContact', 'adminAbout', 'adminCourses', 'adminTestimonials',
+    'adminStatistics', 'adminContent', 'adminHero', 'adminThemeColors',
+    'editedWebsiteCourses', 'adminCourseImages',
+    // Site data
+    'siteColors', 'siteStyles', 'textStyles_hero', 'textStyles_courses',
+    'textStyles_about', 'textStyles_contact', 'textStyles_testimonials',
+    'textStyles_header', 'textStyles_footer'
+  ];
+  
+  if (keysToSync.includes(key)) {
     // Don't wait for Firebase - save locally first, sync async
     if (isFirebaseEnabled && navigator.onLine) {
       try {
@@ -161,6 +167,10 @@ Storage.prototype.setItem = function(key, value) {
             value: JSON.parse(value),
             timestamp: new Date().toISOString()
           })
+        }).then(response => {
+          if (response.ok) {
+            console.log(`✅ Auto-synced to Firebase: ${key}`);
+          }
         }).catch(error => {
           console.log(`Cloud sync pending: ${key}`);
         });
@@ -195,6 +205,38 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initializeFirebase);
 } else {
   initializeFirebase();
+}
+
+// Test Firebase connection and security rules
+async function testFirebaseConnection() {
+  console.log('🧪 Testing Firebase connection...');
+  try {
+    const testUrl = `${FIREBASE_CONFIG.databaseURL}/.json`;
+    const response = await fetch(testUrl);
+    
+    if (response.ok) {
+      console.log('✅ Firebase connection successful - Public read access enabled');
+      return true;
+    } else if (response.status === 401) {
+      console.warn('⚠️ Firebase security rules blocking public reads. Need to update rules.');
+      console.warn('Go to Firebase Console → Realtime Database → Rules and set:');
+      console.warn('{ "rules": { ".read": true, ".write": false } }');
+      return false;
+    } else {
+      console.warn(`⚠️ Firebase returned status: ${response.status}`);
+      return false;
+    }
+  } catch (error) {
+    console.log('❌ Firebase connection failed:', error);
+    return false;
+  }
+}
+
+// Run test on page load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', testFirebaseConnection);
+} else {
+  testFirebaseConnection();
 }
 
 console.log('✅ Firebase config loaded (REST API mode)');
