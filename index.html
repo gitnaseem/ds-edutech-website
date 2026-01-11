@@ -41,6 +41,24 @@
     </div>
   </section>
 
+  <!-- Our Results Section -->
+  <section class="results section" style="background-color: var(--light-color);">
+    <div class="container">
+      <h2 class="section-title">Our Results</h2>
+      <p class="section-subtitle">Celebrating the success stories of our brilliant students</p>
+      
+      <div id="homeResultsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+        <div style="text-align: center; padding: 2rem; color: #999;">
+          <p>Loading student results...</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="results.html" class="btn-primary" style="display: inline-block; padding: 0.8rem 2rem; text-decoration: none;">View All Results →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Featured Subjects Section -->
   <section class="subjects section" id="coursesSection">
     <div class="container">
@@ -525,6 +543,74 @@
     
     // Load statistics when page loads
     document.addEventListener('DOMContentLoaded', loadStatistics);
+    
+    // Load home page results section
+    async function loadHomeResults() {
+      let results = null;
+      
+      // Try Firebase first
+      try {
+        if (navigator.onLine) {
+          const firebaseUrl = 'https://ds-edutech-default-rtdb.firebaseio.com/data/studentResults.json';
+          const response = await fetch(firebaseUrl);
+          if (response.ok) {
+            const firebaseData = await response.json();
+            if (firebaseData && firebaseData.value) {
+              results = firebaseData.value;
+              localStorage.setItem('studentResults', JSON.stringify(results));
+              console.log('✅ Loaded results from Firebase');
+            }
+          }
+        }
+      } catch (error) {
+        console.log('⚠️ Firebase load failed for results, using localStorage');
+      }
+      
+      // Fallback to localStorage
+      if (!results) {
+        const stored = localStorage.getItem('studentResults');
+        if (stored) {
+          results = JSON.parse(stored);
+          console.log('📚 Loaded results from localStorage');
+        }
+      }
+      
+      const container = document.getElementById('homeResultsGrid');
+      if (!results || results.length === 0) {
+        container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #999;"><p>Student success stories coming soon...</p></div>';
+        return;
+      }
+
+      // Show only first 3 results on home page
+      const displayResults = results.slice(0, 3);
+      
+      let html = '';
+      displayResults.forEach(result => {
+        const imageContent = result.photo 
+          ? `<img src="${result.photo}" alt="${result.studentName}" style="width: 100%; height: 200px; object-fit: cover;">`
+          : `<div style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">📚</div>`;
+        
+        html += `
+          <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+            <div style="overflow: hidden; background: #f0f0f0;">
+              ${imageContent}
+            </div>
+            <div style="padding: 1rem;">
+              <h4 style="margin: 0 0 0.5rem 0; color: var(--dark-color); font-size: 1.1rem;">${result.studentName}</h4>
+              <p style="margin: 0.25rem 0; color: #666; font-size: 0.9rem;">📍 ${result.school}</p>
+              <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 0.8rem; border-radius: 8px; text-align: center; margin-top: 0.8rem;">
+                <div style="font-size: 1.5rem; font-weight: bold;">${result.marks}%</div>
+                <div style="font-size: 0.8rem; opacity: 0.9;">${result.board || 'Board Exam'}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    document.addEventListener('DOMContentLoaded', loadHomeResults);
     
     // Apply saved section styles if the function exists (admin dashboard only)
     document.addEventListener('DOMContentLoaded', function() {
