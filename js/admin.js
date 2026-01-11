@@ -1738,6 +1738,54 @@ function applyAllSavedSectionStyles() {
 
 // ===== STUDENT RESULTS MANAGEMENT =====
 
+// Global variable to store student photo data
+let studentPhotoData = null;
+
+// Preview result photo
+function previewResultPhoto(input) {
+  const previewDiv = document.getElementById('resultPhotoPreview');
+  const statusDiv = document.getElementById('resultPhotoStatus');
+  
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    const fileName = file.name;
+    const fileSize = (file.size / 1024).toFixed(2); // in KB
+    
+    // Show filename
+    statusDiv.innerHTML = `<strong>✓ File Selected:</strong> ${fileName} (${fileSize} KB)`;
+    statusDiv.style.color = '#28a745';
+    
+    // Check file size (max 500KB)
+    if (file.size > 500 * 1024) {
+      statusDiv.innerHTML = `<strong style="color: #dc3545;">✗ File too large:</strong> ${fileName} is ${fileSize} KB. Max allowed is 500 KB`;
+      statusDiv.style.color = '#dc3545';
+      previewDiv.innerHTML = '';
+      input.value = '';
+      studentPhotoData = null;
+      return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        studentPhotoData = e.target.result;
+        previewDiv.innerHTML = `<img src="${e.target.result}" style="max-width: 150px; max-height: 150px; border: 2px solid #00b386; border-radius: 8px; object-fit: cover;">`;
+        statusDiv.innerHTML = `<strong style="color: #28a745;">✓ Photo Ready:</strong> ${fileName} is ready to upload`;
+        statusDiv.style.color = '#28a745';
+      } catch (error) {
+        statusDiv.innerHTML = `<strong style="color: #dc3545;">✗ Error:</strong> Failed to process image`;
+        statusDiv.style.color = '#dc3545';
+        studentPhotoData = null;
+      }
+    };
+    reader.readAsDataURL(file);
+  } else {
+    statusDiv.innerHTML = '';
+    previewDiv.innerHTML = '';
+    studentPhotoData = null;
+  }
+}
+
 // Load all student results for admin display
 function loadStudentResults() {
   const resultsList = document.getElementById('resultsList');
@@ -1784,7 +1832,7 @@ function addStudentResult() {
   const school = document.getElementById('resultSchool')?.value?.trim();
   const board = document.getElementById('resultBoard')?.value?.trim();
   const stream = document.getElementById('resultStream')?.value?.trim();
-  const photoUrl = document.getElementById('resultPhoto')?.value?.trim();
+  const photo = studentPhotoData || null;
   
   // Validation
   if (!studentName || !school || marks === '' || marks === null) {
@@ -1804,7 +1852,7 @@ function addStudentResult() {
     school,
     board: board || 'N/A',
     stream: stream || 'N/A',
-    photo: photoUrl || '',
+    photo: photo || null,
     addedDate: new Date().toLocaleString()
   };
   
@@ -1823,7 +1871,10 @@ function addStudentResult() {
   document.getElementById('resultSchool').value = '';
   document.getElementById('resultBoard').value = '';
   document.getElementById('resultStream').value = '';
-  document.getElementById('resultPhoto').value = '';
+  document.getElementById('resultPhotoInput').value = '';
+  document.getElementById('resultPhotoPreview').innerHTML = '';
+  document.getElementById('resultPhotoStatus').innerHTML = '';
+  studentPhotoData = null;
   
   showMessage('success', `✓ ${studentName} added successfully!`);
   
@@ -1868,7 +1919,17 @@ function editStudentResult(index) {
   document.getElementById('resultSchool').value = result.school || '';
   document.getElementById('resultBoard').value = result.board || '';
   document.getElementById('resultStream').value = result.stream || '';
-  document.getElementById('resultPhoto').value = result.photo || '';
+  
+  // Display existing photo if it exists
+  if (result.photo) {
+    document.getElementById('resultPhotoPreview').innerHTML = `<img src="${result.photo}" style="max-width: 150px; max-height: 150px; border: 2px solid #00b386; border-radius: 8px; object-fit: cover;">`;
+    document.getElementById('resultPhotoStatus').innerHTML = `<strong style="color: #28a745;">✓ Current Photo:</strong> Click to change`;
+    studentPhotoData = result.photo;
+  } else {
+    document.getElementById('resultPhotoPreview').innerHTML = '';
+    document.getElementById('resultPhotoStatus').innerHTML = '';
+    studentPhotoData = null;
+  }
   
   // Change button text to indicate editing
   const addButton = document.querySelector('button[onclick="addStudentResult()"]');
@@ -1897,7 +1958,7 @@ function updateStudentResult(index) {
   const school = document.getElementById('resultSchool')?.value?.trim();
   const board = document.getElementById('resultBoard')?.value?.trim();
   const stream = document.getElementById('resultStream')?.value?.trim();
-  const photoUrl = document.getElementById('resultPhoto')?.value?.trim();
+  const photo = studentPhotoData || null;
   
   // Validation
   if (!studentName || !school || marks === '' || marks === null) {
@@ -1920,7 +1981,7 @@ function updateStudentResult(index) {
     school,
     board: board || 'N/A',
     stream: stream || 'N/A',
-    photo: photoUrl || '',
+    photo: photo || studentResults[index].photo || null,
     updatedDate: new Date().toLocaleString()
   };
   
@@ -1933,7 +1994,10 @@ function updateStudentResult(index) {
   document.getElementById('resultSchool').value = '';
   document.getElementById('resultBoard').value = '';
   document.getElementById('resultStream').value = '';
-  document.getElementById('resultPhoto').value = '';
+  document.getElementById('resultPhotoInput').value = '';
+  document.getElementById('resultPhotoPreview').innerHTML = '';
+  document.getElementById('resultPhotoStatus').innerHTML = '';
+  studentPhotoData = null;
   
   // Reset button
   const addButton = document.querySelector('button[onclick*="addStudentResult"]');

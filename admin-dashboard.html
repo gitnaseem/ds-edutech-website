@@ -848,8 +848,11 @@
             </div>
 
             <div class="form-group">
-              <label for="resultPhoto">Student Photo (Image URL)</label>
-              <input type="text" id="resultPhoto" placeholder="https://example.com/photo.jpg">
+              <label for="resultPhotoInput">Student Photo</label>
+              <input type="file" id="resultPhotoInput" accept="image/*" onchange="previewResultPhoto(this)" style="display: none;">
+              <button class="admin-button secondary" onclick="document.getElementById('resultPhotoInput').click()" style="width: 100%; text-align: center; margin-bottom: 0.5rem;">📁 Choose Photo</button>
+              <div id="resultPhotoStatus" style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;"></div>
+              <div id="resultPhotoPreview" style="margin-bottom: 1rem;"></div>
             </div>
 
             <button class="admin-button" onclick="addStudentResult()" style="width: 100%; padding: 1rem;">➕ Add Student Result</button>
