@@ -59,59 +59,13 @@
     </div>
   </section>
 
-  <!-- Featured Subjects Section -->
+  <!-- Featured Classes Section -->
   <section class="subjects section" id="coursesSection">
     <div class="container">
-      <h2 class="section-title">Featured Subjects</h2>
-      <p class="section-subtitle">Comprehensive learning paths for both Science and Arts streams</p>
-      <div class="grid">
-        <!-- Science Card -->
-        <div class="subject-card">
-          <div class="subject-icon">🔬</div>
-          <h3>Science Stream</h3>
-          <p>Master physics, chemistry, and biology with interactive simulations and detailed explanations.</p>
-          <ul>
-            <li>Physics Fundamentals</li>
-            <li>Chemistry Concepts</li>
-            <li>Biology & Life Sciences</li>
-            <li>Mathematics for Science</li>
-            <li>Lab Simulations</li>
-            <li>Exam Practice Tests</li>
-          </ul>
-          <button class="btn-learn" onclick="window.location.href='courses.html?stream=science'">Explore Science</button>
-        </div>
-
-        <!-- Arts Card -->
-        <div class="subject-card">
-          <div class="subject-icon">📚</div>
-          <h3>Arts Stream</h3>
-          <p>Develop critical thinking with history, geography, economics, and literature courses.</p>
-          <ul>
-            <li>History & Culture</li>
-            <li>Geography Insights</li>
-            <li>Economics Basics</li>
-            <li>English Literature</li>
-            <li>Political Science</li>
-            <li>Mock Exams</li>
-          </ul>
-          <button class="btn-learn" onclick="window.location.href='courses.html?stream=arts'">Explore Arts</button>
-        </div>
-
-        <!-- Commerce Card -->
-        <div class="subject-card">
-          <div class="subject-icon">💼</div>
-          <h3>Commerce Stream</h3>
-          <p>Comprehensive commerce education covering accounting, business studies, and economics.</p>
-          <ul>
-            <li>Accountancy</li>
-            <li>Business Studies</li>
-            <li>Economics</li>
-            <li>Mathematics</li>
-            <li>Case Studies</li>
-            <li>Board Exam Papers</li>
-          </ul>
-          <button class="btn-learn" onclick="window.location.href='courses.html?stream=commerce'">Explore Commerce</button>
-        </div>
+      <h2 class="section-title">Featured Classes</h2>
+      <p class="section-subtitle">Choose your class and explore comprehensive courses tailored to your level</p>
+      <div class="grid" id="featuredClassesContainer">
+        <p style="text-align: center; grid-column: 1 / -1; padding: 2rem; color: #999;">Loading classes...</p>
       </div>
     </div>
   </section>
@@ -383,10 +337,119 @@
     
     // Load theme before rendering
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadThemeColors);
+      document.addEventListener('DOMContentLoaded', function() {
+        loadThemeColors();
+        loadFeaturedClasses();
+      });
     } else {
       loadThemeColors();
+      loadFeaturedClasses();
     }
+
+    // Load Featured Classes dynamically from course categories
+    async function loadFeaturedClasses() {
+      try {
+        let courses = null;
+        
+        // Try Firebase first
+        if (navigator.onLine) {
+          const firebaseUrl = 'https://ds-edutech-default-rtdb.firebaseio.com/data/adminCourses.json';
+          const response = await fetch(firebaseUrl);
+          if (response.ok) {
+            const firebaseData = await response.json();
+            if (firebaseData && firebaseData.value) {
+              courses = firebaseData.value;
+              localStorage.setItem('adminCourses', JSON.stringify(courses));
+              console.log('✅ Loaded courses from Firebase');
+            }
+          }
+        }
+      } catch (error) {
+        console.log('⚠️ Firebase load failed, using localStorage');
+      }
+      
+      // Fallback to localStorage
+      if (!courses) {
+        const stored = localStorage.getItem('adminCourses');
+        if (stored) {
+          courses = JSON.parse(stored);
+          console.log('📚 Loaded courses from localStorage');
+        }
+      }
+      
+      // Get unique classes from courses
+      let classes = [];
+      if (courses && courses.length > 0) {
+        const uniqueClasses = new Set();
+        courses.forEach(course => {
+          if (course.category) {
+            uniqueClasses.add(course.category);
+          }
+        });
+        classes = Array.from(uniqueClasses);
+      }
+      
+      // If no courses, show all classes as available options
+      if (classes.length === 0) {
+        classes = ['9th Class', '10th Class', '11th Class', '12th Class'];
+      }
+      
+      // Sort classes in correct order
+      const classOrder = ['9th Class', '10th Class', '11th Class', '12th Class'];
+      classes = classes.filter(c => classOrder.includes(c)).sort((a, b) => {
+        return classOrder.indexOf(a) - classOrder.indexOf(b);
+      });
+      
+      // Create class cards
+      const container = document.getElementById('featuredClassesContainer');
+      let html = '';
+      
+      const classIcons = {
+        '9th Class': '🎓',
+        '10th Class': '📖',
+        '11th Class': '🚀',
+        '12th Class': '🏆'
+      };
+      
+      const classDescriptions = {
+        '9th Class': 'Foundation level courses covering basics of all subjects',
+        '10th Class': 'Board exam preparation with comprehensive course materials',
+        '11th Class': 'Stream-specific courses for Science, Arts, and Commerce',
+        '12th Class': 'Final year preparation with advanced topics and exam practice'
+      };
+      
+      classes.forEach(className => {
+        const coursesInClass = courses.filter(c => c.category === className);
+        const courseCount = coursesInClass.length;
+        const subjects = [...new Set(coursesInClass.map(c => c.level))].join(', ');
+        
+        html += `
+          <div class="subject-card">
+            <div class="subject-icon">${classIcons[className] || '📚'}</div>
+            <h3>${className}</h3>
+            <p>${classDescriptions[className]}</p>
+            <ul>
+              <li>📚 ${courseCount} Courses Available</li>
+              <li>📖 Subjects: ${subjects || 'Science, Arts, Commerce, General'}</li>
+              <li>✅ Expert-Curated Content</li>
+              <li>🎯 Exam-Focused Learning</li>
+              <li>📱 Mobile-Friendly Access</li>
+              <li>🔄 Regularly Updated</li>
+            </ul>
+            <button class="btn-learn" onclick="window.location.href='courses.html'">Explore ${className}</button>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    // Reload featured classes if courses are added/updated
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'adminCourses') {
+        loadFeaturedClasses();
+      }
+    });
 
     // Apply saved text styles
     function applyTextStyles() {
