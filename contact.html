@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact DS_EDUTECH - Get in touch with us for inquiries, support, and partnership opportunities.">
+  <meta name="keywords" content="contact, support, inquiry, DS_EDUTECH">
+  <meta name="author" content="DS_EDUTECH">
+  <title>Contact Us - DS_EDUTECH</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Header & Navigation -->
+  <header>
+    <nav>
+      <div class="logo">DS_EDUTECH</div>
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><button class="btn-login" onclick="window.location.href='login.html'">Login/Signup</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you. Get in touch with our team.</p>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a> / <span>Contact</span>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+        <!-- Contact Form -->
+        <div>
+          <h2 style="font-size: 1.8rem; margin-bottom: 2rem; color: var(--dark-color);">Send us a Message</h2>
+          <form id="contactForm" onsubmit="handleContactForm(event)">
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone">
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject *</label>
+              <select id="subject" name="subject" required>
+                <option value="">Select a subject</option>
+                <option value="general">General Inquiry</option>
+                <option value="courses">Course Information</option>
+                <option value="technical">Technical Support</option>
+                <option value="partnership">Partnership</option>
+                <option value="feedback">Feedback</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message *</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem;">Send Message</button>
+          </form>
+          <p id="formMessage" style="margin-top: 1rem; text-align: center; display: none; color: var(--secondary-color); font-weight: 600;"></p>
+        </div>
+
+        <!-- Contact Information -->
+        <div>
+          <h2 style="font-size: 1.8rem; margin-bottom: 2rem; color: var(--dark-color);">Get in Touch</h2>
+          
+          <div style="background-color: var(--light-color); padding: 1.5rem; border-radius: 15px; margin-bottom: 1.5rem;">
+            <h3 style="color: var(--primary-color); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem;">
+              <span style="font-size: 1.5rem;">📧</span> Email
+            </h3>
+            <p style="color: #555;">
+              <strong>General Support:</strong><br>
+              <a id="contactEmailLink" href="mailto:support@dsedutech.com" style="color: var(--primary-color); text-decoration: underline;">support@dsedutech.com</a>
+            </p>
+            <p style="color: #555; margin-top: 0.8rem;">
+              <strong>Partnerships:</strong><br>
+              <a id="contactPartnershipEmailLink" href="mailto:partnership@dsedutech.com" style="color: var(--primary-color); text-decoration: underline;">partnership@dsedutech.com</a>
+            </p>
+          </div>
+
+          <div style="background-color: var(--light-color); padding: 1.5rem; border-radius: 15px; margin-bottom: 1.5rem;">
+            <h3 style="color: var(--primary-color); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem;">
+              <span style="font-size: 1.5rem;">📱</span> Phone
+            </h3>
+            <p style="color: #555;">
+              <strong id="contactHoursLabel">Monday to Friday:</strong><br>
+              <span id="contactHoursDisplay">9:00 AM - 6:00 PM IST</span><br>
+              <a id="contactPhoneLink" href="tel:+918000123456" style="color: var(--primary-color); text-decoration: underline; font-weight: 600;">+91 8000-123-456</a>
+            </p>
+          </div>
+
+          <div style="background-color: var(--light-color); padding: 1.5rem; border-radius: 15px; margin-bottom: 1.5rem;">
+            <h3 style="color: var(--primary-color); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem;">
+              <span style="font-size: 1.5rem;">📍</span> Location
+            </h3>
+            <p style="color: #555;">
+              <span id="contactLocationName">DS_EDUTECH Headquarters</span><br>
+              <span id="contactAddressLine1Display">Tech Park, Innovation Building</span><br>
+              <span id="contactAddressLine2Display">Bangalore, India - 560001</span><br>
+            </p>
+          </div>
+
+          <div style="background-color: var(--light-color); padding: 1.5rem; border-radius: 15px;">
+            <h3 style="color: var(--primary-color); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem;">
+              <span style="font-size: 1.5rem;">⏰</span> Hours
+            </h3>
+            <p id="contactFullHours" style="color: #555; margin: 0.3rem 0;">
+              <strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM IST<br>
+              <strong>Saturday:</strong> 10:00 AM - 4:00 PM IST<br>
+              <strong>Sunday:</strong> Closed
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section" style="background-color: var(--light-color);">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div style="max-width: 800px; margin: 0 auto;">
+        <div style="background-color: var(--bg-color); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; border-left: 4px solid var(--primary-color);">
+          <h3 style="color: var(--dark-color); margin-bottom: 0.8rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleFAQ(this)">
+            <span>How do I enroll in a course?</span>
+            <span style="font-size: 1.2rem;">+</span>
+          </h3>
+          <p style="color: #555; display: none;" class="faq-answer">
+            Simply sign up on our website, browse through the available courses, and click "Enroll Now" on your chosen course. You can start learning immediately after enrollment.
+          </p>
+        </div>
+
+        <div style="background-color: var(--bg-color); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; border-left: 4px solid var(--primary-color);">
+          <h3 style="color: var(--dark-color); margin-bottom: 0.8rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleFAQ(this)">
+            <span>Do you offer refunds?</span>
+            <span style="font-size: 1.2rem;">+</span>
+          </h3>
+          <p style="color: #555; display: none;" class="faq-answer">
+            Yes, we offer a 7-day money-back guarantee. If you're not satisfied with the course, you can request a full refund within 7 days of enrollment, no questions asked.
+          </p>
+        </div>
+
+        <div style="background-color: var(--bg-color); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; border-left: 4px solid var(--primary-color);">
+          <h3 style="color: var(--dark-color); margin-bottom: 0.8rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleFAQ(this)">
+            <span>Can I access courses offline?</span>
+            <span style="font-size: 1.2rem;">+</span>
+          </h3>
+          <p style="color: #555; display: none;" class="faq-answer">
+            Yes! You can download course materials and watch videos offline with our mobile app. This ensures you can learn anywhere, anytime, without internet dependency.
+          </p>
+        </div>
+
+        <div style="background-color: var(--bg-color); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; border-left: 4px solid var(--primary-color);">
+          <h3 style="color: var(--dark-color); margin-bottom: 0.8rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleFAQ(this)">
+            <span>How does the doubt clearing system work?</span>
+            <span style="font-size: 1.2rem;">+</span>
+          </h3>
+          <p style="color: #555; display: none;" class="faq-answer">
+            You can post your doubts on our platform. Our expert instructors will respond within 24 hours. We also conduct weekly live doubt clearing sessions where you can ask questions in real-time.
+          </p>
+        </div>
+
+        <div style="background-color: var(--bg-color); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; border-left: 4px solid var(--primary-color);">
+          <h3 style="color: var(--dark-color); margin-bottom: 0.8rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleFAQ(this)">
+            <span>What boards and streams do you cover?</span>
+            <span style="font-size: 1.2rem;">+</span>
+          </h3>
+          <p style="color: #555; display: none;" class="faq-answer">
+            We provide comprehensive coverage for CBSE and 18+ State Boards. Our courses cover Science, Arts, and Commerce streams for classes VI to XII.
+          </p>
+        </div>
+
+        <div style="background-color: var(--bg-color); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; border-left: 4px solid var(--primary-color);">
+          <h3 style="color: var(--dark-color); margin-bottom: 0.8rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="toggleFAQ(this)">
+            <span>Do you provide certificates?</span>
+            <span style="font-size: 1.2rem;">+</span>
+          </h3>
+          <p style="color: #555; display: none;" class="faq-answer">
+            Yes, upon completing a course and passing the final exam, you'll receive a digital certificate of completion from DS_EDUTECH that you can share on your resume or social profiles.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Reasons Section -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">How We Can Help</h2>
+      <div class="grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">📚</div>
+          <h3>Course Inquiries</h3>
+          <p>Have questions about our courses? Learn more about curriculum, pricing, and how to get started with your preferred subject.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🛠️</div>
+          <h3>Technical Support</h3>
+          <p>Facing technical issues? Our support team is here to help you resolve platform-related problems quickly and efficiently.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🤝</div>
+          <h3>Partnerships</h3>
+          <p>Interested in partnering with DS_EDUTECH? Let's discuss collaboration opportunities for schools, institutes, and organizations.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">💬</div>
+          <h3>Feedback</h3>
+          <p>Your feedback helps us improve. Share your suggestions and ideas to make DS_EDUTECH better for all students.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🎓</div>
+          <h3>Student Support</h3>
+          <p>Need guidance on course selection or academic planning? Our counselors can help you choose the right learning path.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">💼</div>
+          <h3>Business Inquiries</h3>
+          <p>For bulk enrollment, enterprise solutions, or special requests, contact our business development team.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="hero" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); padding: 3rem 2rem;">
+    <div class="hero-content" style="color: white;">
+      <h2 style="color: white; font-size: 2rem; margin-bottom: 1rem;">Ready to Get Started?</h2>
+      <p style="color: rgba(255,255,255,0.9); font-size: 1rem;">Contact us today and begin your learning journey with DS_EDUTECH.</p>
+      <button class="btn-primary" onclick="window.location.href='login.html'" style="background-color: white; color: var(--primary-color); margin-top: 1rem; padding: 0.9rem 2rem; font-size: 0.95rem;">Start Learning Now</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>DS_EDUTECH</h4>
+        <p>Smart Learning for a Digital Future. Empowering students to achieve their academic goals.</p>
+      </div>
+
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Subjects</h4>
+        <ul>
+          <li><a href="courses.html?stream=science">Science</a></li>
+          <li><a href="courses.html?stream=arts">Arts</a></li>
+          <li><a href="courses.html?stream=commerce">Commerce</a></li>
+          <li><a href="courses.html">All Courses</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2024 DS_EDUTECH. All rights reserved. | Designed with ❤️ for Students</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Apply saved theme colors on page load
+    const savedTheme = JSON.parse(localStorage.getItem('adminThemeColors'));
+    if (savedTheme) {
+      document.documentElement.style.setProperty('--primary-color', savedTheme.primary);
+      document.documentElement.style.setProperty('--secondary-color', savedTheme.secondary);
+    }
+
+    // Apply saved text styles
+    function applyTextStyles() {
+      const SECTION_SELECTORS = {
+        hero: '.hero, .hero-content, .hero h1, .hero p',
+        courses: '.subjects, .subject-card, .subject-card h3, .subject-card p',
+        about: '.about, .about-section, .about h2, .about p',
+        contact: '.contact, .contact-section, .contact h2, .contact p',
+        testimonials: '.testimonials, .testimonial-item, .testimonial-item h3, .testimonial-item p',
+        header: 'header, nav, .nav-links a, .logo',
+        footer: 'footer, .footer-content, .footer-section, .footer-section a'
+      };
+
+      Object.keys(SECTION_SELECTORS).forEach(section => {
+        const styles = JSON.parse(localStorage.getItem(`textStyles_${section}`));
+        if (!styles) return;
+
+        const selectors = SECTION_SELECTORS[section];
+        let styleTag = document.getElementById(`textStyle_${section}`);
+        if (!styleTag) {
+          styleTag = document.createElement('style');
+          styleTag.id = `textStyle_${section}`;
+          document.head.appendChild(styleTag);
+        }
+
+        let cssRule = `${selectors} { color: ${styles.color} !important; font-size: ${styles.size}px !important; font-family: ${styles.fontFamily || "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"} !important;`;
+        if (styles.bold) cssRule += ' font-weight: bold !important;';
+        if (styles.italic) cssRule += ' font-style: italic !important;';
+        if (styles.underline) cssRule += ' text-decoration: underline !important;';
+        cssRule += ` text-align: ${styles.alignment} !important; }`;
+        styleTag.innerHTML = cssRule;
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', applyTextStyles);
+
+    function toggleFAQ(element) {
+      const answer = element.nextElementSibling;
+      const icon = element.querySelector('span:last-child');
+      
+      if (answer.style.display === 'none') {
+        answer.style.display = 'block';
+        icon.textContent = '−';
+      } else {
+        answer.style.display = 'none';
+        icon.textContent = '+';
+      }
+    }
+
+    function handleContactForm(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+
+      // Get your WhatsApp number from admin settings
+      const contactData = JSON.parse(localStorage.getItem('adminContact')) || {};
+      const whatsappNumber = contactData.phone || '+918000123456'; // Fallback to default
+      
+      // Clean phone number: remove spaces, hyphens, add country code if needed
+      let cleanPhone = whatsappNumber.replace(/[^0-9+]/g, '');
+      if (!cleanPhone.startsWith('+')) {
+        cleanPhone = '+91' + cleanPhone.replace(/^91/, '');
+      }
+      
+      // Format the message with all contact form details
+      const formattedMessage = `*New Contact Form Submission*\n\n` +
+                               `*Name:* ${name}\n` +
+                               `*Email:* ${email}\n` +
+                               `*Phone:* ${phone || 'Not provided'}\n` +
+                               `*Subject:* ${subject}\n\n` +
+                               `*Message:*\n${message}`;
+      
+      const whatsappURL = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(formattedMessage)}`;
+      
+      // Show success message
+      const formMessage = document.getElementById('formMessage');
+      formMessage.textContent = `Thank you, ${name}! Opening WhatsApp to send your message...`;
+      formMessage.style.display = 'block';
+      formMessage.style.color = '#25d366';
+
+      // Reset form
+      document.getElementById('contactForm').reset();
+
+      // Open WhatsApp after short delay
+      setTimeout(() => {
+        window.open(whatsappURL, '_blank');
+        formMessage.textContent = `Your message has been sent via WhatsApp!`;
+        
+        // Hide message after 5 seconds
+        setTimeout(() => {
+          formMessage.style.display = 'none';
+          formMessage.style.color = 'var(--secondary-color)';
+        }, 5000);
+      }, 500);
+    }
+
+    // Load contact information from localStorage
+    function loadContactContent() {
+      const contactData = JSON.parse(localStorage.getItem('adminContact'));
+      
+      if (contactData) {
+        // Update email links
+        const emailLink = document.getElementById('contactEmailLink');
+        const partnershipEmailLink = document.getElementById('contactPartnershipEmailLink');
+        
+        if (emailLink && contactData.email) {
+          emailLink.href = `mailto:${contactData.email}`;
+          emailLink.textContent = contactData.email;
+        }
+        
+        if (partnershipEmailLink && contactData.partnershipEmail) {
+          partnershipEmailLink.href = `mailto:${contactData.partnershipEmail}`;
+          partnershipEmailLink.textContent = contactData.partnershipEmail;
+        }
+        
+        // Update phone section
+        const hoursLabel = document.getElementById('contactHoursLabel');
+        const hoursDisplay = document.getElementById('contactHoursDisplay');
+        const phoneLink = document.getElementById('contactPhoneLink');
+        
+        if (hoursLabel && contactData.hours) {
+          hoursLabel.textContent = contactData.hours;
+        }
+        
+        if (phoneLink && contactData.phone) {
+          phoneLink.href = `tel:${contactData.phone}`;
+          phoneLink.textContent = contactData.phone;
+        }
+        
+        if (hoursDisplay && contactData.hoursDetails) {
+          hoursDisplay.textContent = contactData.hoursDetails;
+        }
+        
+        // Update location section
+        const locationName = document.getElementById('contactLocationName');
+        const addressLine1 = document.getElementById('contactAddressLine1Display');
+        const addressLine2 = document.getElementById('contactAddressLine2Display');
+        
+        if (locationName && contactData.locationDesc) {
+          locationName.textContent = contactData.locationDesc;
+        }
+        
+        if (addressLine1 && contactData.addressLine1) {
+          addressLine1.textContent = contactData.addressLine1;
+        }
+        
+        if (addressLine2 && contactData.addressLine2) {
+          addressLine2.textContent = contactData.addressLine2;
+        }
+        
+        // Update hours section
+        const fullHours = document.getElementById('contactFullHours');
+        if (fullHours && contactData.hours) {
+          fullHours.innerHTML = `<strong>Monday - Friday:</strong> ${contactData.hours}<br>` +
+                                `<strong>Saturday:</strong> ${contactData.hoursDetails || '10:00 AM - 4:00 PM IST'}<br>` +
+                                `<strong>Sunday:</strong> Closed`;
+        }
+      }
+    }
+    
+    // Load contact content when page loads
+    document.addEventListener('DOMContentLoaded', loadContactContent);
+    
+    // Apply saved section styles if the function exists (admin dashboard only)
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof applyAllSavedSectionStyles === 'function') {
+        applyAllSavedSectionStyles();
+      }
+    });
+
+    // WhatsApp Floating Button Functionality
+    function openWhatsApp() {
+      const contactData = JSON.parse(localStorage.getItem('adminContact')) || {};
+      const phoneNumber = contactData.phone || '+918000123456'; // Fallback to default
+      
+      // Clean phone number: remove spaces, hyphens, add country code if needed
+      let cleanPhone = phoneNumber.replace(/[^0-9+]/g, '');
+      if (!cleanPhone.startsWith('+')) {
+        cleanPhone = '+91' + cleanPhone.replace(/^91/, '');
+      }
+      
+      const message = encodeURIComponent('Hello, I would like to inquire about your services.');
+      const whatsappURL = `https://wa.me/${cleanPhone}?text=${message}`;
+      window.open(whatsappURL, '_blank');
+    }
+  </script>
+
+  <!-- Floating WhatsApp Button -->
+  <div class="floating-whatsapp-btn" onclick="openWhatsApp()" title="Contact us on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-5.031 1.378c-1.56.92-2.814 2.212-3.596 3.726C2.524 12.402 2.712 15.424 4.145 17.856c.555 1.002 1.311 1.926 2.21 2.613.452.339.922.63 1.41.865 1.513.745 3.324 1.058 5.093.992 1.77-.066 3.495-.38 5.078-1.02 1.583-.64 2.906-1.549 3.806-2.605.9-1.056 1.537-2.274 1.76-3.54.223-1.265.04-2.585-.623-3.73-.663-1.144-1.573-2.059-2.611-2.61-.513-.27-1.051-.44-1.6-.509m11.439-5.26l-1.414 1.414a8.004 8.004 0 011.536 9.693l1.414-1.414A10.004 10.004 0 0022.75 1.422m-3.536 3.536l-1.414 1.414A5.004 5.004 0 0019.214 10l1.414-1.414A7.004 7.004 0 0019.214 4.958z"/>
+    </svg>
+  </div>
+
+  <style>
+    /* Floating WhatsApp Button Styles */
+    .floating-whatsapp-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+      z-index: 999;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .floating-whatsapp-btn:hover {
+      width: 70px;
+      height: 70px;
+      bottom: 25px;
+      right: 25px;
+      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.6);
+      transform: scale(1.1);
+    }
+
+    .floating-whatsapp-btn svg {
+      width: 35px;
+      height: 35px;
+      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+    }
+
+    .floating-whatsapp-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .floating-whatsapp-btn {
+        width: 55px;
+        height: 55px;
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .floating-whatsapp-btn:hover {
+        width: 65px;
+        height: 65px;
+        bottom: 15px;
+        right: 15px;
+      }
+
+      .floating-whatsapp-btn svg {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  </style>
+</body>
+</html>

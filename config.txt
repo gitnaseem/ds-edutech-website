@@ -1,0 +1,282 @@
+# DS_EDUTECH - Configuration File
+# This file contains key information that appears across all pages
+# Update these values to customize the website
+
+# ========== SITE INFORMATION ==========
+SITE_NAME = "DS_EDUTECH"
+SITE_TAGLINE = "Smart Learning for a Digital Future"
+SITE_DESCRIPTION = "Professional online learning platform for Science, Arts, and Commerce subjects"
+SITE_URL = "https://www.dsedutech.com"
+SITE_YEAR = "2024"
+
+# ========== CONTACT INFORMATION ==========
+SUPPORT_EMAIL = "support@dsedutech.com"
+PARTNERSHIP_EMAIL = "partnership@dsedutech.com"
+PHONE_NUMBER = "+91 8000-123-456"
+ADDRESS = "Tech Park, Innovation Building, Bangalore, India - 560001"
+
+# ========== OFFICE HOURS ==========
+HOURS_WEEKDAY = "9:00 AM - 6:00 PM IST"
+HOURS_SATURDAY = "10:00 AM - 4:00 PM IST"
+HOURS_SUNDAY = "Closed"
+
+# ========== SOCIAL MEDIA ==========
+FACEBOOK_URL = "https://facebook.com/dsedutech"
+TWITTER_URL = "https://twitter.com/dsedutech"
+LINKEDIN_URL = "https://linkedin.com/company/dsedutech"
+YOUTUBE_URL = "https://youtube.com/dsedutech"
+INSTAGRAM_URL = "https://instagram.com/dsedutech"
+
+# ========== STATISTICS ==========
+TOTAL_STUDENTS = "50,000+"
+TOTAL_INSTRUCTORS = "200+"
+TOTAL_VIDEOS = "1000+"
+SUCCESS_RATE = "95%"
+STATES_COVERED = "18+"
+COURSE_BATCHES = "100+"
+
+# ========== COLORS ==========
+PRIMARY_COLOR = "#0066cc"
+SECONDARY_COLOR = "#00b386"
+DARK_COLOR = "#1a1a1a"
+LIGHT_COLOR = "#f8f9fa"
+WHITE_COLOR = "#ffffff"
+TEXT_COLOR = "#333333"
+BORDER_COLOR = "#e0e0e0"
+
+# ========== COURSES OFFERED ==========
+# Science Stream Courses
+SCIENCE_COURSES = [
+    "Physics Fundamentals",
+    "Chemistry Concepts",
+    "Biology & Life Sciences",
+    "Mathematics for Science",
+    "Lab Simulations",
+    "Science Exam Practice"
+]
+
+# Arts Stream Courses
+ARTS_COURSES = [
+    "History & Culture",
+    "Geography Insights",
+    "Economics Basics",
+    "English Literature",
+    "Political Science",
+    "Arts Exam Practice"
+]
+
+# Commerce Stream Courses
+COMMERCE_COURSES = [
+    "Accountancy",
+    "Business Studies",
+    "Commerce Economics",
+    "Commerce Mathematics",
+    "Business Case Studies",
+    "Commerce Test Series"
+]
+
+# ========== BOARDS SUPPORTED ==========
+CBSE_CLASSES = "VI to XII"
+CBSE_FEATURES = [
+    "NCERT-aligned curriculum",
+    "JEE/NEET preparation",
+    "Board exam focused",
+    "Sample papers & solutions",
+    "Expert video lectures"
+]
+
+STATE_BOARDS = [
+    "Maharashtra Board",
+    "Karnataka Board",
+    "Tamil Nadu Board",
+    "Andhra Pradesh Board",
+    "Telangana Board",
+    "Gujarat Board",
+    "Rajasthan Board",
+    "Uttar Pradesh Board",
+    "Bihar Board",
+    "Jharkhand Board",
+    "Madhya Pradesh Board",
+    "Punjab Board",
+    "Haryana Board",
+    "Kerala Board",
+    "West Bengal Board",
+    "Odisha Board",
+    "Assam Board",
+    "Himachal Pradesh Board"
+]
+
+# ========== BENEFITS ==========
+BENEFITS = [
+    {
+        "icon": "⚡",
+        "title": "Fast & Efficient",
+        "description": "Lightning-fast learning platform optimized for smooth performance"
+    },
+    {
+        "icon": "📱",
+        "title": "Mobile-Friendly",
+        "description": "Learn anywhere, anytime on any device with perfect responsiveness"
+    },
+    {
+        "icon": "👨‍🏫",
+        "title": "Expert Instructors",
+        "description": "Highly qualified educators with proven track records"
+    },
+    {
+        "icon": "📊",
+        "title": "Progress Tracking",
+        "description": "Detailed analytics and performance reports"
+    },
+    {
+        "icon": "🎯",
+        "title": "Exam-Focused",
+        "description": "Content aligned with board exam patterns"
+    },
+    {
+        "icon": "💬",
+        "title": "Community Support",
+        "description": "Connect with peers and learn together"
+    }
+]
+
+# ========== PRICING ==========
+BASIC_PLAN = {
+    "name": "Basic",
+    "price": "₹4,999",
+    "period": "3 months",
+    "features": ["Video Lessons", "Practice Tests", "Community Access"]
+}
+
+STANDARD_PLAN = {
+    "name": "Standard",
+    "price": "₹9,999",
+    "period": "6 months",
+    "features": ["All Basic Features", "Live Sessions", "Doubt Clearing", "Study Materials"]
+}
+
+PREMIUM_PLAN = {
+    "name": "Premium",
+    "price": "₹14,999",
+    "period": "1 year",
+    "features": ["All Standard Features", "Personalized Mentoring", "Mock Exams", "Performance Analytics"]
+}
+
+# ========== FAQ ITEMS ==========
+FAQ_ITEMS = [
+    {
+        "question": "How do I enroll in a course?",
+        "answer": "Sign up on the website, browse courses, and click 'Enroll Now' on your choice."
+    },
+    {
+        "question": "Do you offer refunds?",
+        "answer": "Yes, 7-day money-back guarantee if not satisfied."
+    },
+    {
+        "question": "Can I access courses offline?",
+        "answer": "Yes, download materials and watch videos offline with our mobile app."
+    },
+    {
+        "question": "How does the doubt clearing system work?",
+        "answer": "Post doubts online and get responses within 24 hours. Weekly live sessions also available."
+    },
+    {
+        "question": "What boards and streams do you cover?",
+        "answer": "CBSE and 18+ State Boards. Science, Arts, and Commerce streams for classes VI to XII."
+    },
+    {
+        "question": "Do you provide certificates?",
+        "answer": "Yes, digital certificates upon course completion and passing the final exam."
+    }
+]
+
+# ========== TESTIMONIALS ==========
+TESTIMONIALS = [
+    {
+        "text": "DS_EDUTECH helped me score 96% in my board exams!",
+        "author": "Rishika Sharma",
+        "position": "CBSE Class XII",
+        "rating": 5
+    },
+    {
+        "text": "The mock tests were incredibly helpful for exam preparation.",
+        "author": "Aditya Kumar",
+        "position": "State Board Class XI",
+        "rating": 5
+    },
+    {
+        "text": "The doubt clearing sessions are amazing!",
+        "author": "Priya Desai",
+        "position": "CBSE Class X",
+        "rating": 5
+    },
+    {
+        "text": "Clear, concise video explanations. Quality over quantity!",
+        "author": "Vikram Jain",
+        "position": "CBSE Class XII",
+        "rating": 5
+    }
+]
+
+# ========== META INFORMATION ==========
+META_KEYWORDS = "online learning, board exams, CBSE, Science, Arts, Commerce, education"
+META_AUTHOR = "DS_EDUTECH"
+META_CHARSET = "UTF-8"
+VIEWPORT = "width=device-width, initial-scale=1.0"
+
+# ========== ANALYTICS ==========
+GOOGLE_ANALYTICS_ID = "G-XXXXXXXXXX"  # Replace with your GA ID
+GOOGLE_ADS_ID = "ca-pub-XXXXXXXXXXXXXXXX"  # Replace with your Google Ads ID
+
+# ========== INTEGRATIONS ==========
+# Add your integration credentials here (keep secure!)
+STRIPE_PUBLIC_KEY = "pk_live_XXXX"
+RAZORPAY_KEY_ID = "rzp_live_XXXX"
+MAILCHIMP_API_KEY = "XXXX"
+TWILIO_ACCOUNT_SID = "XXXX"
+TWILIO_AUTH_TOKEN = "XXXX"
+
+# ========== DEPLOYMENT SETTINGS ==========
+ENVIRONMENT = "production"  # development, staging, production
+DEBUG = False
+ENABLE_GZIP = True
+ENABLE_CACHE = True
+CACHE_TIME = 3600  # seconds
+
+# ========== FEATURE FLAGS ==========
+ENABLE_SOCIAL_LOGIN = True
+ENABLE_ONLINE_PAYMENT = False  # Set to True when payment gateway is integrated
+ENABLE_LIVE_CLASSES = False
+ENABLE_FORUMS = False
+ENABLE_NOTIFICATIONS = False
+
+# ========== LEGAL ==========
+PRIVACY_POLICY_URL = "/privacy.html"
+TERMS_CONDITIONS_URL = "/terms.html"
+COOKIE_POLICY_URL = "/cookies.html"
+REFUND_POLICY_URL = "/refund.html"
+
+# ========== API ENDPOINTS ==========
+# Backend API URLs (if using backend)
+API_BASE_URL = "https://api.dsedutech.com"
+AUTH_ENDPOINT = "/api/auth"
+COURSES_ENDPOINT = "/api/courses"
+USERS_ENDPOINT = "/api/users"
+PAYMENTS_ENDPOINT = "/api/payments"
+
+# ========== NOTES ==========
+# 1. Update SITE_INFORMATION with your actual details
+# 2. Replace email addresses with real contact emails
+# 3. Update STATISTICS based on your actual platform data
+# 4. Add your social media profile URLs
+# 5. Configure ANALYTICS IDs for tracking
+# 6. Set ENVIRONMENT appropriately for deployment
+# 7. Keep sensitive keys in environment variables, not in code
+# 8. Update FEATURE_FLAGS as you implement features
+# 9. Customize COURSES_OFFERED to match your curriculum
+# 10. Add legal pages when deploying
+
+# ========== VERSION ==========
+VERSION = "1.0.0"
+LAST_UPDATED = "2024-01-07"
+CREATED_BY = "DS_EDUTECH Development Team"

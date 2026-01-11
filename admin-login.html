@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DS_EDUTECH Admin Login - Manage website content">
+  <meta name="author" content="DS_EDUTECH">
+  <title>Admin Login - DS_EDUTECH</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .admin-login-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .admin-login-box {
+      background: white;
+      padding: 3rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .admin-login-box h1 {
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+
+    .admin-login-box p {
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .admin-login-box .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .admin-login-box label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .admin-login-box input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .admin-login-box input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    .admin-login-box .btn-login-admin {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .admin-login-box .btn-login-admin:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 102, 204, 0.3);
+    }
+
+    .admin-note {
+      background-color: #fffacd;
+      border: 1px solid #ffd700;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #666;
+      text-align: left;
+    }
+
+    .admin-note strong {
+      color: var(--dark-color);
+    }
+
+    .back-link {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .back-link a {
+      color: white;
+      text-decoration: underline;
+      font-weight: 500;
+      transition: opacity 0.3s ease;
+    }
+
+    .back-link a:hover {
+      opacity: 0.8;
+    }
+
+    .forgot-password-link {
+      margin-top: 0.5rem;
+      text-align: right;
+    }
+
+    .forgot-password-link a {
+      color: white;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+      font-weight: 500;
+    }
+
+    .forgot-password-link a:hover {
+      text-decoration: underline;
+      opacity: 0.8;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+      20%, 40%, 60%, 80% { transform: translateX(10px); }
+    }
+
+    .modal-content h2 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .modal-content p {
+      color: #666;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .modal-button {
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
+    }
+
+    .modal-button.primary {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+
+    .modal-button.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 102, 204, 0.3);
+    }
+
+    .modal-button.secondary {
+      background: #f0f0f0;
+      color: var(--primary-color);
+    }
+
+    .modal-button.secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .modal-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .modal-tab {
+      flex: 1;
+      padding: 0.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      color: #999;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .modal-tab.active {
+      color: var(--primary-color);
+      border-bottom-color: var(--primary-color);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .error-message {
+      color: #dc3545;
+      margin-top: 1rem;
+      padding: 0.8rem;
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      border-radius: 8px;
+      display: none;
+      font-size: 0.9rem;
+    }
+
+    .success-message {
+      color: #155724;
+      padding: 0.8rem;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      border-radius: 8px;
+      display: none;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-login-container">
+    <div class="admin-login-box">
+      <h1>🔐 Admin Panel</h1>
+      <p>Manage DS_EDUTECH Content</p>
+
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+        <div class="form-group">
+          <label for="adminUsername">Username</label>
+          <input type="text" id="adminUsername" name="username" required placeholder="Enter admin username">
+        </div>
+
+        <div class="form-group">
+          <label for="adminPassword">Password</label>
+          <input type="password" id="adminPassword" name="password" required placeholder="Enter admin password">
+        </div>
+
+        <button type="submit" class="btn-login-admin">Login to Admin Panel</button>
+      </form>
+
+      <div class="forgot-password-link">
+        <a href="#" onclick="openForgotPasswordModal(event)">🔑 Forgot Password?</a>
+      </div>
+
+      <div class="error-message" id="errorMessage"></div>
+
+      <div class="admin-note">
+        <strong>Demo Credentials:</strong><br>
+        Username: <code>admin</code><br>
+        Password: <code>admin123</code><br>
+        <br>
+        <em>Change these in the admin dashboard settings for security!</em>
+      </div>
+
+      <div class="back-link">
+        <a href="index.html">← Back to Website</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div class="modal-overlay" id="forgotPasswordModal">
+    <div class="modal-content">
+      <h2>🔑 Password Recovery</h2>
+
+      <div class="modal-tabs">
+        <button class="modal-tab active" onclick="switchRecoveryTab('security', event)">Security Question</button>
+        <button class="modal-tab" onclick="switchRecoveryTab('demo', event)">Demo Credentials</button>
+      </div>
+
+      <!-- Security Question Tab -->
+      <div id="securityTab" class="tab-content active">
+        <p>Answer your security question to reset your password</p>
+        <div class="success-message" id="securitySuccess"></div>
+        <div class="error-message" id="securityError"></div>
+
+        <div class="admin-form-group" style="margin-bottom: 1.5rem; text-align: left;">
+          <label for="recoveryUsername" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">Username</label>
+          <input type="text" id="recoveryUsername" placeholder="Enter your admin username" style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.95rem;">
+        </div>
+
+        <div class="admin-form-group" style="margin-bottom: 1.5rem; text-align: left;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">Security Question</label>
+          <div id="securityQuestionDisplay" style="padding: 0.8rem; background: #f5f5f5; border-radius: 8px; color: #666; min-height: 2rem; display: flex; align-items: center;">
+            Loading...
+          </div>
+        </div>
+
+        <div class="admin-form-group" style="margin-bottom: 1.5rem; text-align: left;">
+          <label for="recoveryAnswer" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #333;">Answer</label>
+          <input type="text" id="recoveryAnswer" placeholder="Enter your answer" style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.95rem;">
+        </div>
+
+        <button class="modal-button primary" onclick="verifySecurityQuestion()">Verify & Reset Password</button>
+      </div>
+
+      <!-- Demo Credentials Tab -->
+      <div id="demoTab" class="tab-content">
+        <p>If you haven't set up a security question yet, here are the default demo credentials:</p>
+        <div style="background: #fffacd; border: 1px solid #ffd700; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; text-align: left;">
+          <p style="margin: 0; margin-bottom: 0.5rem;"><strong>Username:</strong> <code>admin</code></p>
+          <p style="margin: 0; margin-bottom: 0.5rem;"><strong>Password:</strong> <code>admin123</code></p>
+          <p style="margin: 0; color: #666; font-size: 0.85rem;"><em>After logging in, change these credentials in Settings for security!</em></p>
+        </div>
+      </div>
+
+      <button class="modal-button secondary" onclick="closeForgotPasswordModal()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    // FORGOT PASSWORD FUNCTIONS
+    function openForgotPasswordModal(event) {
+      event.preventDefault();
+      document.getElementById('forgotPasswordModal').classList.add('active');
+      loadSecurityQuestion();
+    }
+
+    function closeForgotPasswordModal() {
+      document.getElementById('forgotPasswordModal').classList.remove('active');
+      document.getElementById('securityError').style.display = 'none';
+      document.getElementById('securitySuccess').style.display = 'none';
+      document.getElementById('recoveryUsername').value = '';
+      document.getElementById('recoveryAnswer').value = '';
+    }
+
+    function switchRecoveryTab(tab, event) {
+      event.preventDefault();
+      
+      // Hide all tabs
+      document.getElementById('securityTab').classList.remove('active');
+      document.getElementById('demoTab').classList.remove('active');
+      
+      // Remove active from all buttons
+      document.querySelectorAll('.modal-tab').forEach(btn => btn.classList.remove('active'));
+      
+      // Show selected tab and mark button active
+      if (tab === 'security') {
+        document.getElementById('securityTab').classList.add('active');
+      } else if (tab === 'demo') {
+        document.getElementById('demoTab').classList.add('active');
+      }
+      event.target.classList.add('active');
+    }
+
+    function loadSecurityQuestion() {
+      const username = document.getElementById('recoveryUsername').value.trim();
+      const securityInfo = JSON.parse(localStorage.getItem('adminSecurityQuestion')) || {};
+      
+      if (!securityInfo.question) {
+        document.getElementById('securityQuestionDisplay').textContent = '❌ No security question set. Use demo credentials or contact your administrator.';
+        document.getElementById('securityQuestionDisplay').style.color = '#dc3545';
+        return;
+      }
+
+      // Map question codes to readable text
+      const questionMap = {
+        'pet': "What is your favorite pet's name?",
+        'city': 'In which city were you born?',
+        'school': 'What was the name of your first school?',
+        'color': 'What is your favorite color?',
+        'movie': 'What is your favorite movie?',
+        'book': 'What is your favorite book?',
+        'teacher': 'Who was your favorite teacher?'
+      };
+
+      document.getElementById('securityQuestionDisplay').textContent = questionMap[securityInfo.question] || securityInfo.question;
+      document.getElementById('securityQuestionDisplay').style.color = '#333';
+    }
+
+    function verifySecurityQuestion() {
+      const username = document.getElementById('recoveryUsername').value.trim();
+      const answer = document.getElementById('recoveryAnswer').value.trim();
+      const errorEl = document.getElementById('securityError');
+      const successEl = document.getElementById('securitySuccess');
+      
+      errorEl.style.display = 'none';
+      successEl.style.display = 'none';
+
+      if (!username || !answer) {
+        errorEl.textContent = '❌ Please fill in all fields';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      const savedUsername = localStorage.getItem('admin_username') || 'admin';
+      const securityInfo = JSON.parse(localStorage.getItem('adminSecurityQuestion')) || {};
+
+      // Verify username
+      if (username !== savedUsername) {
+        errorEl.textContent = '❌ Username not found';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      // Verify security answer
+      if (!securityInfo.answer || answer.toLowerCase() !== securityInfo.answer) {
+        errorEl.textContent = '❌ Incorrect answer to security question';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      // Reset password to default
+      const newPassword = 'admin123_reset_' + new Date().getTime().toString().slice(-6);
+      localStorage.setItem('admin_password', newPassword);
+      localStorage.setItem('adminPassword', newPassword);
+
+      successEl.innerHTML = `✓ Password reset successful!<br><br><strong>Temporary Password:</strong> <code>${newPassword}</code><br><br>You can now login with this password. Change it immediately in Settings for security!`;
+      successEl.style.display = 'block';
+
+      setTimeout(() => {
+        closeForgotPasswordModal();
+        document.getElementById('adminUsername').value = username;
+        document.getElementById('adminPassword').value = newPassword;
+      }, 3000);
+    }
+
+    // ORIGINAL LOGIN FUNCTION (with consistent key names)
+    function handleAdminLogin(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('adminUsername').value.trim();
+      const password = document.getElementById('adminPassword').value.trim();
+      const errorMessage = document.getElementById('errorMessage');
+      const form = document.getElementById('adminLoginForm');
+      const submitButton = form.querySelector('button[type="submit"]');
+
+      // Prevent multiple submissions
+      if (submitButton.disabled) return;
+
+      // Clear previous animations and messages
+      errorMessage.style.display = 'none';
+      errorMessage.textContent = '';
+      form.style.animation = 'none';
+
+      // Default credentials
+      const defaultUsername = 'admin';
+      const defaultPassword = 'admin123';
+      
+      // Get stored credentials (if changed by admin)
+      const savedUsername = localStorage.getItem('admin_username');
+      const savedPassword = localStorage.getItem('admin_password');
+
+      // Validate: check against default credentials OR stored credentials
+      let isValidUser = false;
+      
+      // First check: default credentials
+      if (username === defaultUsername && password === defaultPassword) {
+        isValidUser = true;
+      }
+      // Second check: stored credentials (if they exist and are different from defaults)
+      else if (savedUsername && savedPassword && username === savedUsername && password === savedPassword) {
+        isValidUser = true;
+      }
+
+      if (isValidUser) {
+        // Disable button to prevent multiple submissions
+        submitButton.disabled = true;
+        submitButton.textContent = '⏳ Logging in...';
+        
+        // Add loading state to page
+        document.body.style.opacity = '0.7';
+        document.body.style.pointerEvents = 'none';
+        
+        // Set auth and redirect
+        localStorage.setItem('admin_logged_in', 'true');
+        localStorage.setItem('admin_login_time', new Date().getTime());
+        
+        // Use window.location.replace for cleaner redirect (doesn't add to history)
+        window.location.replace('admin-dashboard.html');
+      } else {
+        // Failed login
+        errorMessage.textContent = '❌ Invalid credentials. Please try again. (admin / admin123)';
+        errorMessage.style.display = 'block';
+        document.getElementById('adminPassword').value = '';
+        
+        // Shake animation on error only
+        setTimeout(() => {
+          form.style.animation = 'shake 0.5s ease';
+        }, 50);
+        
+        // Reset animation after it completes
+        setTimeout(() => {
+          form.style.animation = 'none';
+        }, 550);
+      }
+    }
+
+    // Check if already logged in
+    if (localStorage.getItem('admin_logged_in') === 'true') {
+      window.location.href = 'admin-dashboard.html';
+    }
+  </script>
+</body>
+</html>

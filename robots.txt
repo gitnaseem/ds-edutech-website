@@ -1,0 +1,51 @@
+# DS_EDUTECH robots.txt
+# This file tells search engines which pages to crawl and index
+
+# Allow all robots by default
+User-agent: *
+Allow: /
+
+# Disallow private/admin areas (none for this static site)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Allow search engines to crawl CSS and JavaScript
+Allow: /css/
+Allow: /js/
+Allow: /assets/
+
+# Specify crawl delay (wait time between requests in seconds)
+Crawl-delay: 1
+
+# Specify request rate (requests per second)
+Request-rate: 1/10s
+
+# Point to sitemap
+Sitemap: https://www.dsedutech.com/sitemap.xml
+
+# Specific rules for Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Specific rules for Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots and scrapers
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Allow local testing with asterisk wildcard
+# Search engines can crawl all content
+# Last updated: 2024-01-07

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DS_EDUTECH Login & Signup - Access your learning dashboard and start your educational journey.">
+  <meta name="keywords" content="login, signup, register, DS_EDUTECH">
+  <meta name="author" content="DS_EDUTECH">
+  <title>Login/Signup - DS_EDUTECH</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .auth-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: calc(100vh - 60px);
+    }
+
+    .auth-left {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .auth-left h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .auth-left p {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.95;
+    }
+
+    .auth-features {
+      text-align: left;
+      margin: 2rem 0;
+    }
+
+    .auth-features li {
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .auth-features li:before {
+      content: '✓';
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .auth-right {
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .form-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .form-tab {
+      flex: 1;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      color: #999;
+    }
+
+    .form-tab.active {
+      color: var(--primary-color);
+      border-bottom-color: var(--primary-color);
+    }
+
+    .form-content {
+      display: none;
+    }
+
+    .form-content.active {
+      display: block;
+    }
+
+    .social-login {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-btn {
+      padding: 0.8rem;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      background-color: var(--bg-color);
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .social-btn:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .divider {
+      text-align: center;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    .divider:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      right: 0;
+      height: 1px;
+      background-color: var(--border-color);
+    }
+
+    .divider span {
+      background-color: var(--bg-color);
+      padding: 0 0.8rem;
+      color: #999;
+      position: relative;
+    }
+
+    .form-footer {
+      margin-top: 1.5rem;
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .form-footer a {
+      color: var(--primary-color);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .remember-forgot input[type="checkbox"] {
+      width: auto;
+      margin-right: 0.5rem;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+      20%, 40%, 60%, 80% { transform: translateX(10px); }
+    }
+
+    @media (max-width: 768px) {
+      .auth-container {
+        grid-template-columns: 1fr;
+      }
+
+      .auth-left {
+        display: none;
+      }
+
+      .auth-right {
+        padding: 2rem 1rem;
+      }
+
+      .form-container {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header & Navigation -->
+  <header>
+    <nav>
+      <div class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">DS_EDUTECH</div>
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><button class="btn-login" onclick="window.location.href='login.html'" style="background-color: var(--primary-color); color: white;">Login/Signup</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Authentication Container -->
+  <div class="auth-container">
+    <!-- Left Side (Info) -->
+    <div class="auth-left">
+      <h2>Welcome to DS_EDUTECH</h2>
+      <p>Smart Learning for a Digital Future</p>
+      
+      <div class="auth-features">
+        <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Why Join DS_EDUTECH?</h3>
+        <ul style="list-style: none;">
+          <li>✓ Comprehensive curriculum for all boards</li>
+          <li>✓ Expert instructors with proven track records</li>
+          <li>✓ Interactive learning with simulations</li>
+          <li>✓ 1000+ practice tests and mock exams</li>
+          <li>✓ Doubt clearing with expert support</li>
+          <li>✓ Track your progress with analytics</li>
+          <li>✓ Learn at your own pace, anytime</li>
+          <li>✓ 95% student success rate</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+        <p style="font-size: 0.95rem; opacity: 0.9;">Join 50,000+ students already learning with DS_EDUTECH</p>
+      </div>
+    </div>
+
+    <!-- Right Side (Forms) -->
+    <div class="auth-right">
+      <div class="form-container">
+        <!-- Form Tabs -->
+        <div class="form-tabs">
+          <div class="form-tab active" onclick="switchTab('login')">👤 Login</div>
+          <div class="form-tab" onclick="switchTab('signup')">📝 Sign Up</div>
+          <div class="form-tab" onclick="switchTab('admin')">🔐 Admin</div>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login" class="form-content active">
+          <h2 style="text-align: center; font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--dark-color);">Welcome Back</h2>
+
+          <div class="social-login">
+            <button class="social-btn" onclick="handleSocialLogin('google')">
+              <span style="font-size: 1.2rem;">🔵</span> Google
+            </button>
+            <button class="social-btn" onclick="handleSocialLogin('facebook')">
+              <span style="font-size: 1.2rem;">👥</span> Facebook
+            </button>
+          </div>
+
+          <div class="divider"><span>OR</span></div>
+
+          <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+              <label for="loginEmail">Email Address</label>
+              <input type="email" id="loginEmail" name="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" id="loginPassword" name="password" required>
+            </div>
+
+            <div class="remember-forgot">
+              <label style="display: flex; align-items: center; cursor: pointer;">
+                <input type="checkbox" name="remember">
+                <span style="margin-left: 0.5rem;">Remember me</span>
+              </label>
+              <a onclick="alert('Reset password functionality would be implemented here')">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem;">Login Now</button>
+          </form>
+
+          <div class="form-footer">
+            Don't have an account? <a onclick="switchTab('signup')">Sign up here</a>
+          </div>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="signup" class="form-content">
+          <h2 style="text-align: center; font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--dark-color);">Create Account</h2>
+
+          <div class="social-login">
+            <button class="social-btn" onclick="handleSocialLogin('google')">
+              <span style="font-size: 1.2rem;">🔵</span> Google
+            </button>
+            <button class="social-btn" onclick="handleSocialLogin('facebook')">
+              <span style="font-size: 1.2rem;">👥</span> Facebook
+            </button>
+          </div>
+
+          <div class="divider"><span>OR</span></div>
+
+          <form id="signupForm" onsubmit="handleSignup(event)">
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" name="fullName" required>
+            </div>
+
+            <div class="form-group">
+              <label for="signupEmail">Email Address</label>
+              <input type="email" id="signupEmail" name="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phoneNumber">Phone Number</label>
+              <input type="tel" id="phoneNumber" name="phone" required>
+            </div>
+
+            <div class="form-group">
+              <label for="stream">Select Stream</label>
+              <select id="stream" name="stream" required>
+                <option value="">Choose your stream</option>
+                <option value="science">Science</option>
+                <option value="arts">Arts</option>
+                <option value="commerce">Commerce</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="board">Select Board</label>
+              <select id="board" name="board" required>
+                <option value="">Choose your board</option>
+                <option value="cbse">CBSE</option>
+                <option value="maharashtra">Maharashtra Board</option>
+                <option value="karnataka">Karnataka Board</option>
+                <option value="tamil-nadu">Tamil Nadu Board</option>
+                <option value="other">Other State Board</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="signupPassword">Password</label>
+              <input type="password" id="signupPassword" name="password" required>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+
+            <div style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; gap: 0.5rem;">
+              <input type="checkbox" id="terms" name="terms" required style="width: auto; margin-top: 0.3rem;">
+              <label for="terms" style="font-size: 0.9rem; color: #666;">
+                I agree to the <a onclick="alert('Terms would be shown in a modal')" style="color: var(--primary-color); cursor: pointer;">Terms & Conditions</a> and <a onclick="alert('Privacy policy would be shown in a modal')" style="color: var(--primary-color); cursor: pointer;">Privacy Policy</a>
+              </label>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem;">Create Account</button>
+          </form>
+
+          <div class="form-footer">
+            Already have an account? <a onclick="switchTab('login')">Login here</a>
+          </div>
+        </div>
+
+        <!-- Admin Login Form -->
+        <div id="admin" class="form-content">
+          <h2 style="text-align: center; font-size: 1.5rem; margin-bottom: 2rem; color: var(--dark-color);">🔐 Admin Access</h2>
+          
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <p style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem;">For full admin dashboard access with advanced management tools, use the dedicated admin login page.</p>
+            <a href="admin-login-v2.html" class="btn-primary" style="display: inline-block; padding: 0.9rem 2rem; text-decoration: none; font-weight: 600;">
+              🔐 Go to Admin Login
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="margin-top: 0;">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>DS_EDUTECH</h4>
+        <p>Smart Learning for a Digital Future. Empowering students to achieve their academic goals.</p>
+      </div>
+
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2024 DS_EDUTECH. All rights reserved. | Designed with ❤️ for Students</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Apply saved theme colors on page load
+    const savedTheme = JSON.parse(localStorage.getItem('adminThemeColors'));
+    if (savedTheme) {
+      document.documentElement.style.setProperty('--primary-color', savedTheme.primary);
+      document.documentElement.style.setProperty('--secondary-color', savedTheme.secondary);
+    }
+
+    // Apply saved text styles
+    function applyTextStyles() {
+      const SECTION_SELECTORS = {
+        hero: '.hero, .hero-content, .hero h1, .hero p',
+        courses: '.subjects, .subject-card, .subject-card h3, .subject-card p',
+        about: '.about, .about-section, .about h2, .about p',
+        contact: '.contact, .contact-section, .contact h2, .contact p',
+        testimonials: '.testimonials, .testimonial-item, .testimonial-item h3, .testimonial-item p',
+        header: 'header, nav, .nav-links a, .logo',
+        footer: 'footer, .footer-content, .footer-section, .footer-section a'
+      };
+
+      Object.keys(SECTION_SELECTORS).forEach(section => {
+        const styles = JSON.parse(localStorage.getItem(`textStyles_${section}`));
+        if (!styles) return;
+
+        const selectors = SECTION_SELECTORS[section];
+        let styleTag = document.getElementById(`textStyle_${section}`);
+        if (!styleTag) {
+          styleTag = document.createElement('style');
+          styleTag.id = `textStyle_${section}`;
+          document.head.appendChild(styleTag);
+        }
+
+        let cssRule = `${selectors} { color: ${styles.color} !important; font-size: ${styles.size}px !important; font-family: ${styles.fontFamily || "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"} !important;`;
+        if (styles.bold) cssRule += ' font-weight: bold !important;';
+        if (styles.italic) cssRule += ' font-style: italic !important;';
+        if (styles.underline) cssRule += ' text-decoration: underline !important;';
+        cssRule += ` text-align: ${styles.alignment} !important; }`;
+        styleTag.innerHTML = cssRule;
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', applyTextStyles);
+    
+    // Apply saved section styles if the function exists (admin dashboard only)
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof applyAllSavedSectionStyles === 'function') {
+        applyAllSavedSectionStyles();
+      }
+    });
+
+    function switchTab(tab) {
+      // Hide all forms
+      document.getElementById('login').classList.remove('active');
+      document.getElementById('signup').classList.remove('active');
+      document.getElementById('admin').classList.remove('active');
+      
+      // Remove active class from all tabs
+      document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
+      
+      // Show selected form
+      document.getElementById(tab).classList.add('active');
+      
+      // Add active class to clicked tab
+      event.target.classList.add('active');
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      // Regular student login
+      alert(`Welcome back! You've logged in with ${email}.\n\nIn a production environment, this would authenticate your credentials and redirect to your learning dashboard.`);
+      
+      // Reset form
+      document.getElementById('loginForm').reset();
+    }
+
+    function handleAdminLogin(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('adminUsername').value.trim();
+      const password = document.getElementById('adminPassword').value.trim();
+      const errorMessage = document.getElementById('adminErrorMessage');
+      const form = document.getElementById('adminLoginForm');
+      const submitButton = form.querySelector('button[type="submit"]');
+
+      // Prevent multiple submissions
+      if (submitButton.disabled) return;
+
+      // Clear previous animations and messages
+      errorMessage.style.display = 'none';
+      errorMessage.textContent = '';
+      form.style.animation = 'none';
+
+      // Default credentials
+      const defaultUsername = 'admin';
+      const defaultPassword = 'admin123';
+      
+      // Get stored credentials (if changed by admin)
+      const savedUsername = localStorage.getItem('admin_username');
+      const savedPassword = localStorage.getItem('admin_password');
+
+      // Validate: check against default credentials OR stored credentials
+      let isValidUser = false;
+      
+      // First check: default credentials
+      if (username === defaultUsername && password === defaultPassword) {
+        isValidUser = true;
+      }
+      // Second check: stored credentials (if they exist and are different from defaults)
+      else if (savedUsername && savedPassword && username === savedUsername && password === savedPassword) {
+        isValidUser = true;
+      }
+
+      if (isValidUser) {
+        // Disable button to prevent multiple submissions
+        submitButton.disabled = true;
+        submitButton.textContent = '⏳ Logging in...';
+        
+        // Add loading state to page
+        document.body.style.opacity = '0.7';
+        document.body.style.pointerEvents = 'none';
+        
+        // Successful login - set auth and redirect
+        localStorage.setItem('admin_logged_in', 'true');
+        localStorage.setItem('admin_login_time', new Date().getTime());
+        
+        // Use window.location.replace for cleaner redirect (doesn't add to history)
+        window.location.replace('admin-dashboard.html');
+      } else {
+        // Failed login
+        errorMessage.textContent = '❌ Invalid credentials. Please try again. (admin / admin123)';
+        errorMessage.style.display = 'block';
+        document.getElementById('adminPassword').value = '';
+        
+        // Shake animation on error only
+        setTimeout(() => {
+          form.style.animation = 'shake 0.5s ease';
+        }, 50);
+        
+        // Reset animation after it completes
+        setTimeout(() => {
+          form.style.animation = 'none';
+        }, 550);
+      }
+    }
+
+    function handleSignup(event) {
+      event.preventDefault();
+      
+      const fullName = document.getElementById('fullName').value;
+      const email = document.getElementById('signupEmail').value;
+      const stream = document.getElementById('stream').value;
+      const board = document.getElementById('board').value;
+      
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      // Validate passwords match
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+      
+      // Simulate signup
+      alert(`Welcome to DS_EDUTECH, ${fullName}!\n\nYour account has been created.\nEmail: ${email}\nStream: ${stream}\nBoard: ${board}\n\nYou can now access all courses and start learning!`);
+      
+      // Reset form
+      document.getElementById('signupForm').reset();
+      
+      // Switch to login tab
+      setTimeout(() => {
+        switchTab('login');
+      }, 500);
+    }
+
+    function handleSocialLogin(provider) {
+      alert(`${provider.charAt(0).toUpperCase() + provider.slice(1)} login would be implemented here.\n\nThis would typically redirect to the provider's authentication service.`);
+    }
+  </script>
+</body>
+</html>

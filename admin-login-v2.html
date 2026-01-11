@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DS_EDUTECH Admin Login - Secure access to admin dashboard">
+  <meta name="author" content="DS_EDUTECH">
+  <title>Admin Login - DS_EDUTECH</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-wrapper {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 90%;
+      max-width: 900px;
+      height: auto;
+      max-height: 600px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .login-left {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .login-left h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .login-left p {
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      opacity: 0.95;
+      line-height: 1.6;
+    }
+
+    .login-features {
+      text-align: left;
+      margin: 2rem 0;
+    }
+
+    .login-features li {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .login-features li:before {
+      content: '✓';
+      font-weight: bold;
+      font-size: 1.3rem;
+      background: rgba(255, 255, 255, 0.2);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .login-right {
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #f9f9f9;
+    }
+
+    .login-form-container {
+      width: 100%;
+      max-width: 350px;
+      margin: 0 auto;
+    }
+
+    .login-form-container h3 {
+      font-size: 1.8rem;
+      color: var(--dark-color);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .login-form-subtitle {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--dark-color);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+    }
+
+    .form-group input::placeholder {
+      color: #aaa;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .login-button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      display: none;
+      background: #fee;
+      border: 1px solid #f99;
+      color: #c33;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      animation: shake 0.5s ease;
+    }
+
+    .success-message {
+      display: none;
+      background: #efe;
+      border: 1px solid #9f9;
+      color: #3c3;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .back-link a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-top: 5px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-overlay.show {
+      display: flex;
+    }
+
+    @media (max-width: 768px) {
+      .login-container {
+        grid-template-columns: 1fr;
+        max-height: none;
+        height: auto;
+      }
+
+      .login-left {
+        padding: 2rem;
+        min-height: 300px;
+      }
+
+      .login-left h2 {
+        font-size: 1.6rem;
+      }
+
+      .login-right {
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <div class="login-wrapper">
+    <div class="login-container">
+      <!-- Left Side -->
+      <div class="login-left">
+        <h2>🔐 Admin Access</h2>
+        <p>Manage your DS_EDUTECH platform with full control over content, settings, and customization options.</p>
+        <ul class="login-features">
+          <li>Content Management System</li>
+          <li>Theme & Styling Customization</li>
+          <li>User & Course Management</li>
+          <li>Analytics & Reports</li>
+        </ul>
+      </div>
+
+      <!-- Right Side -->
+      <div class="login-right">
+        <div class="login-form-container">
+          <h3>Admin Login</h3>
+          <p class="login-form-subtitle">Enter your admin credentials to continue</p>
+
+          <div class="error-message" id="errorMessage"></div>
+          <div class="success-message" id="successMessage"></div>
+
+          <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+            <div class="form-group">
+              <label for="adminUsername">Username</label>
+              <input 
+                type="text" 
+                id="adminUsername" 
+                placeholder="Enter your username" 
+                required
+                autocomplete="off"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="adminPassword">Password</label>
+              <input 
+                type="password" 
+                id="adminPassword" 
+                placeholder="Enter your password" 
+                required
+                autocomplete="off"
+              >
+            </div>
+
+            <button type="submit" class="login-button" id="submitBtn">🔓 Login to Admin</button>
+          </form>
+
+          <div class="back-link">
+            <a href="index.html">← Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple login handler - NO redirects here, let dashboard handle it
+    function handleAdminLogin(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('adminUsername').value.trim();
+      const password = document.getElementById('adminPassword').value.trim();
+      const errorMessage = document.getElementById('errorMessage');
+      const form = document.getElementById('adminLoginForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const loadingOverlay = document.getElementById('loadingOverlay');
+
+      // Prevent multiple submissions
+      if (submitBtn.disabled) return;
+
+      // Clear messages
+      errorMessage.style.display = 'none';
+      errorMessage.textContent = '';
+
+      // Default credentials
+      const defaultUsername = 'admin';
+      const defaultPassword = 'admin123';
+
+      // Get stored credentials (if changed by admin)
+      const savedUsername = localStorage.getItem('admin_username');
+      const savedPassword = localStorage.getItem('admin_password');
+
+      // Validate
+      let isValidUser = false;
+
+      console.log('Login attempt with:', username);
+      console.log('Saved username:', savedUsername);
+      console.log('Saved password set:', !!savedPassword);
+
+      // If credentials have been changed, ONLY use updated credentials
+      if (savedUsername && savedPassword) {
+        // Updated credentials exist - only these are valid
+        if (username === savedUsername && password === savedPassword) {
+          isValidUser = true;
+          console.log('Matched updated credentials:', savedUsername);
+        } else {
+          console.log('Failed - tried old or wrong credentials when updated ones exist');
+        }
+      } else {
+        // No updated credentials - use defaults
+        if (username === defaultUsername && password === defaultPassword) {
+          isValidUser = true;
+          console.log('Matched default credentials');
+        }
+      }
+
+      if (isValidUser) {
+        // Show loading overlay
+        loadingOverlay.classList.add('show');
+        submitBtn.disabled = true;
+        submitBtn.textContent = '⏳ Logging in...';
+
+        // Set authentication token
+        localStorage.setItem('admin_logged_in', 'true');
+        localStorage.setItem('admin_login_time', new Date().getTime());
+        
+        // Wait for localStorage to be written, then redirect
+        setTimeout(function() {
+          window.location.href = 'admin-dashboard.html';
+        }, 500);
+      } else {
+        // Show error
+        console.log('Invalid credentials provided');
+        const errorText = savedUsername ? 
+          `❌ Invalid credentials. Please use updated: ${savedUsername}` : 
+          '❌ Invalid credentials. Default: admin / admin123';
+        errorMessage.textContent = errorText;
+        errorMessage.style.display = 'block';
+
+        // Clear password
+        document.getElementById('adminPassword').value = '';
+
+        // Shake animation
+        form.style.animation = 'none';
+        setTimeout(() => {
+          form.style.animation = 'shake 0.5s ease';
+        }, 10);
+
+        // Reset animation
+        setTimeout(() => {
+          form.style.animation = 'none';
+        }, 550);
+
+        // Focus on username for retry
+        document.getElementById('adminUsername').focus();
+      }
+    }
+
+    // Clear messages when user starts typing
+    document.getElementById('adminUsername').addEventListener('input', function() {
+      document.getElementById('errorMessage').style.display = 'none';
+    });
+
+    document.getElementById('adminPassword').addEventListener('input', function() {
+      document.getElementById('errorMessage').style.display = 'none';
+    });
+  </script>
+</body>
+</html>

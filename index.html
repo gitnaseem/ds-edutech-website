@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DS_EDUTECH - Smart Learning for a Digital Future. Learn Science and Arts subjects for board-level students with State Boards and CBSE support.">
+  <meta name="keywords" content="online learning, Science, Arts, CBSE, State Board, education, board exams">
+  <meta name="author" content="DS_EDUTECH">
+  <meta property="og:title" content="DS_EDUTECH - Smart Learning for a Digital Future">
+  <meta property="og:description" content="Professional online learning platform for Science and Arts subjects">
+  <meta property="og:type" content="website">
+  <title>DS_EDUTECH - Smart Learning for a Digital Future</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Header & Navigation -->
+  <header>
+    <nav>
+      <div class="logo">DS_EDUTECH</div>
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><button class="btn-login" onclick="window.location.href='login.html'">Login/Signup</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 id="heroHeading">Smart Learning for a <span class="gradient-text">Digital Future</span></h1>
+      <p id="heroDescription">Master Science and Arts subjects with our interactive platform designed for board-level students. Learn from expert educators, practice with real exam questions, and achieve your academic goals.</p>
+      <div class="cta-buttons">
+        <button class="btn-primary" id="heroPrimaryBtn" onclick="document.getElementById('coursesSection').scrollIntoView({behavior: 'smooth'})">Start Learning Today</button>
+        <button class="btn-secondary" id="heroSecondaryBtn" onclick="window.location.href='about.html'">Explore More</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Subjects Section -->
+  <section class="subjects section" id="coursesSection">
+    <div class="container">
+      <h2 class="section-title">Featured Subjects</h2>
+      <p class="section-subtitle">Comprehensive learning paths for both Science and Arts streams</p>
+      <div class="grid">
+        <!-- Science Card -->
+        <div class="subject-card">
+          <div class="subject-icon">🔬</div>
+          <h3>Science Stream</h3>
+          <p>Master physics, chemistry, and biology with interactive simulations and detailed explanations.</p>
+          <ul>
+            <li>Physics Fundamentals</li>
+            <li>Chemistry Concepts</li>
+            <li>Biology & Life Sciences</li>
+            <li>Mathematics for Science</li>
+            <li>Lab Simulations</li>
+            <li>Exam Practice Tests</li>
+          </ul>
+          <button class="btn-learn" onclick="window.location.href='courses.html?stream=science'">Explore Science</button>
+        </div>
+
+        <!-- Arts Card -->
+        <div class="subject-card">
+          <div class="subject-icon">📚</div>
+          <h3>Arts Stream</h3>
+          <p>Develop critical thinking with history, geography, economics, and literature courses.</p>
+          <ul>
+            <li>History & Culture</li>
+            <li>Geography Insights</li>
+            <li>Economics Basics</li>
+            <li>English Literature</li>
+            <li>Political Science</li>
+            <li>Mock Exams</li>
+          </ul>
+          <button class="btn-learn" onclick="window.location.href='courses.html?stream=arts'">Explore Arts</button>
+        </div>
+
+        <!-- Commerce Card -->
+        <div class="subject-card">
+          <div class="subject-icon">💼</div>
+          <h3>Commerce Stream</h3>
+          <p>Comprehensive commerce education covering accounting, business studies, and economics.</p>
+          <ul>
+            <li>Accountancy</li>
+            <li>Business Studies</li>
+            <li>Economics</li>
+            <li>Mathematics</li>
+            <li>Case Studies</li>
+            <li>Board Exam Papers</li>
+          </ul>
+          <button class="btn-learn" onclick="window.location.href='courses.html?stream=commerce'">Explore Commerce</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Board Coverage Section -->
+  <section class="boards section" style="background-color: var(--light-color);">
+    <div class="container">
+      <h2 class="section-title">Board Coverage</h2>
+      <p class="section-subtitle">Tailored curriculum for State Boards and CBSE</p>
+      <div class="grid grid-2">
+        <!-- CBSE Board -->
+        <div class="board-item">
+          <h3>CBSE Board</h3>
+          <p>Complete curriculum aligned with Central Board of Secondary Education standards.</p>
+          <ul class="board-features">
+            <li>Classes VI to XII</li>
+            <li>NCERT-aligned content</li>
+            <li>JEE/NEET preparation</li>
+            <li>Sample papers & solutions</li>
+            <li>Video explanations</li>
+            <li>Doubt clearing sessions</li>
+          </ul>
+        </div>
+
+        <!-- State Boards -->
+        <div class="board-item">
+          <h3>State Boards</h3>
+          <p>Comprehensive coverage for all major state education boards across India.</p>
+          <ul class="board-features">
+            <li>Multi-state support</li>
+            <li>Regional curriculum</li>
+            <li>State board exams</li>
+            <li>Local language support</li>
+            <li>Competitive exams prep</li>
+            <li>Expert guidance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose DS_EDUTECH (Benefits) Section -->
+  <section class="benefits section">
+    <div class="container">
+      <h2 class="section-title">Why Choose DS_EDUTECH?</h2>
+      <p class="section-subtitle">Experience the future of learning</p>
+      <div class="grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">⚡</div>
+          <h3>Fast & Efficient</h3>
+          <p>Lightning-fast learning platform optimized for smooth performance. Access content instantly without delays or buffering.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">📱</div>
+          <h3>Mobile-Friendly</h3>
+          <p>Learn anywhere, anytime on any device. Our responsive design ensures perfect learning experience on phones and tablets.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">👨‍🏫</div>
+          <h3>Expert Instructors</h3>
+          <p>Learn from highly qualified educators with years of board exam preparation experience and proven track records.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">📊</div>
+          <h3>Progress Tracking</h3>
+          <p>Detailed analytics and performance reports help you identify strengths and work on weak areas effectively.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🎯</div>
+          <h3>Exam-Focused</h3>
+          <p>Carefully curated content directly aligned with board exam patterns. Practice with previous year papers and mock tests.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">💬</div>
+          <h3>Community Support</h3>
+          <p>Connect with peers, ask doubts, and learn together in our supportive community of thousands of students.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3>50,000+</h3>
+          <p>Active Students</p>
+        </div>
+        <div class="stat-item">
+          <h3>200+</h3>
+          <p>Expert Instructors</p>
+        </div>
+        <div class="stat-item">
+          <h3>1000+</h3>
+          <p>Video Lessons</p>
+        </div>
+        <div class="stat-item">
+          <h3>95%</h3>
+          <p>Success Rate</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Student Testimonials Section -->
+  <section class="testimonials section" style="background-color: var(--light-color);">
+    <div class="container">
+      <h2 class="section-title">Student Testimonials</h2>
+      <p class="section-subtitle">Hear from students who achieved their goals with DS_EDUTECH</p>
+      <div class="grid">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"DS_EDUTECH helped me score 96% in my board exams! The structured approach and expert guidance made complex topics so easy to understand."</p>
+          <div class="student-info">
+            <div class="student-avatar">RS</div>
+            <div class="student-details">
+              <h4>Rishika Sharma</h4>
+              <p>CBSE Class XII</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"The mock tests were incredibly helpful for my exam preparation. I improved my marks significantly within just 3 months of joining."</p>
+          <div class="student-info">
+            <div class="student-avatar">AK</div>
+            <div class="student-details">
+              <h4>Aditya Kumar</h4>
+              <p>State Board Class XI</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"The doubt clearing sessions are amazing! I could clear all my misconceptions and became confident before my exams. Highly recommended!"</p>
+          <div class="student-info">
+            <div class="student-avatar">PD</div>
+            <div class="student-details">
+              <h4>Priya Desai</h4>
+              <p>CBSE Class X</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 4 -->
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"The video explanations are clear and concise. I don't have to spend hours studying. Quality over quantity - that's what I love about DS_EDUTECH!"</p>
+          <div class="student-info">
+            <div class="student-avatar">VJ</div>
+            <div class="student-details">
+              <h4>Vikram Jain</h4>
+              <p>CBSE Class XII</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="hero" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); padding: 4rem 2rem;">
+    <div class="hero-content" style="color: white;">
+      <h2 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">Ready to Start Your Learning Journey?</h2>
+      <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">Join thousands of students already achieving their academic goals with DS_EDUTECH.</p>
+      <div class="cta-buttons">
+        <button class="btn-primary" onclick="window.location.href='login.html'" style="background-color: white; color: var(--primary-color);">Start Learning Today</button>
+        <button class="btn-secondary" onclick="window.location.href='contact.html'" style="border-color: white; color: white;">Get in Touch</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>DS_EDUTECH</h4>
+        <p>Smart Learning for a Digital Future. Empowering students to achieve their academic goals.</p>
+      </div>
+
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Subjects</h4>
+        <ul>
+          <li><a href="courses.html?stream=science">Science</a></li>
+          <li><a href="courses.html?stream=arts">Arts</a></li>
+          <li><a href="courses.html?stream=commerce">Commerce</a></li>
+          <li><a href="courses.html">All Courses</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2024 DS_EDUTECH. All rights reserved. | Designed with ❤️ for Students</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Apply saved theme colors on page load
+    const savedTheme = JSON.parse(localStorage.getItem('adminThemeColors'));
+    if (savedTheme) {
+      document.documentElement.style.setProperty('--primary-color', savedTheme.primary);
+      document.documentElement.style.setProperty('--secondary-color', savedTheme.secondary);
+    }
+
+    // Apply saved text styles
+    function applyTextStyles() {
+      const SECTION_SELECTORS = {
+        hero: '.hero, .hero-content, .hero h1, .hero p',
+        courses: '.subjects, .subject-card, .subject-card h3, .subject-card p',
+        about: '.about, .about-section, .about h2, .about p',
+        contact: '.contact, .contact-section, .contact h2, .contact p',
+        testimonials: '.testimonials, .testimonial-item, .testimonial-item h3, .testimonial-item p',
+        header: 'header, nav, .nav-links a, .logo',
+        footer: 'footer, .footer-content, .footer-section, .footer-section a'
+      };
+
+      Object.keys(SECTION_SELECTORS).forEach(section => {
+        const styles = JSON.parse(localStorage.getItem(`textStyles_${section}`));
+        if (!styles) return;
+
+        const selectors = SECTION_SELECTORS[section];
+        let styleTag = document.getElementById(`textStyle_${section}`);
+        if (!styleTag) {
+          styleTag = document.createElement('style');
+          styleTag.id = `textStyle_${section}`;
+          document.head.appendChild(styleTag);
+        }
+
+        let cssRule = `${selectors} { color: ${styles.color} !important; font-size: ${styles.size}px !important; font-family: ${styles.fontFamily || "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"} !important;`;
+        if (styles.bold) cssRule += ' font-weight: bold !important;';
+        if (styles.italic) cssRule += ' font-style: italic !important;';
+        if (styles.underline) cssRule += ' text-decoration: underline !important;';
+        cssRule += ` text-align: ${styles.alignment} !important; }`;
+        styleTag.innerHTML = cssRule;
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', applyTextStyles);
+
+    // Load hero content from admin settings
+    function loadHeroContent() {
+      const defaultHero = {
+        title: 'Smart Learning for a Digital Future',
+        subtitle: 'Master Science and Arts subjects with our interactive platform designed for board-level students. Learn from expert educators, practice with real exam questions, and achieve your academic goals.',
+        primaryButtonText: 'Start Learning Today',
+        secondaryButtonText: 'Explore More'
+      };
+
+      const hero = JSON.parse(localStorage.getItem('adminHero')) || defaultHero;
+
+      // Update hero section
+      const headingElement = document.getElementById('heroHeading');
+      const descriptionElement = document.getElementById('heroDescription');
+      const primaryBtnElement = document.getElementById('heroPrimaryBtn');
+      const secondaryBtnElement = document.getElementById('heroSecondaryBtn');
+
+      if (headingElement) {
+        // Split the title to handle gradient text
+        const titleParts = hero.title.split('Digital Future');
+        if (titleParts.length === 2) {
+          headingElement.innerHTML = titleParts[0].trim() + '<span class="gradient-text">Digital Future</span>' + titleParts[1].trim();
+        } else {
+          headingElement.textContent = hero.title;
+        }
+      }
+      if (descriptionElement) descriptionElement.textContent = hero.subtitle;
+      if (primaryBtnElement) primaryBtnElement.textContent = hero.primaryButtonText;
+      if (secondaryBtnElement) secondaryBtnElement.textContent = hero.secondaryButtonText;
+    }
+
+    // Load hero content when page loads
+    document.addEventListener('DOMContentLoaded', loadHeroContent);
+    
+    // Apply saved section styles if the function exists (admin dashboard only)
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof applyAllSavedSectionStyles === 'function') {
+        applyAllSavedSectionStyles();
+      }
+    });
+  </script>
+</body>
+</html>
