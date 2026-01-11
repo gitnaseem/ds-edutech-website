@@ -471,7 +471,7 @@
           `;
         } else {
           html += `
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%;">
           `;
           
           coursesInClass.forEach(course => {
@@ -480,12 +480,12 @@
               : `<div style="width: 100%; height: 180px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; border-radius: 8px 8px 0 0;"><span style="font-size: 3rem;">📚</span></div>`;
             
             html += `
-              <div class="course-card">
+              <div class="course-card" style="display: flex; flex-direction: column; min-width: 0;">
                 ${imageContent}
-                <div class="course-content">
+                <div class="course-content" style="flex: 1; display: flex; flex-direction: column;">
                   <span class="course-level">${course.level}</span>
                   <h4 style="margin: 0.8rem 0 0.5rem 0; color: #333;">${course.title}</h4>
-                  <p style="margin: 0; font-size: 0.9rem; color: #666; line-height: 1.5;">${course.description}</p>
+                  <p style="margin: 0; font-size: 0.9rem; color: #666; line-height: 1.5; flex: 1;">${course.description}</p>
                   <div class="course-meta" style="margin-top: 1rem;">
                     <span>📚 ${course.videos} Videos</span>
                     <span>⏱️ ${course.hours} Hours</span>
