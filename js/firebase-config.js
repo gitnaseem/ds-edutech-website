@@ -148,7 +148,7 @@ Storage.prototype.setItem = function(key, value) {
     // Admin data
     'adminContact', 'adminAbout', 'adminCourses', 'adminTestimonials',
     'adminStatistics', 'adminContent', 'adminHero', 'adminThemeColors',
-    'editedWebsiteCourses', 'adminCourseImages',
+    'editedWebsiteCourses', 'adminCourseImages', 'studentResults',
     // Site data
     'siteColors', 'siteStyles', 'textStyles_hero', 'textStyles_courses',
     'textStyles_about', 'textStyles_contact', 'textStyles_testimonials',

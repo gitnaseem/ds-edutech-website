@@ -389,6 +389,7 @@
         <li><a href="#courses" class="menu-link" data-section="courses">📚 Manage Courses</a></li>
         <li><a href="#hero" class="menu-link" data-section="hero">🎯 Hero Section</a></li>
         <li><a href="#testimonials" class="menu-link" data-section="testimonials">⭐ Testimonials</a></li>
+        <li><a href="#results" class="menu-link" data-section="results">🏆 Our Results</a></li>
         <li><a href="#about" class="menu-link" data-section="about">ℹ️ About Section</a></li>
         <li><a href="#content" class="menu-link" data-section="content">📝 Content Pages</a></li>
         <li><a href="#contact" class="menu-link" data-section="contact">📧 Contact Info</a></li>
@@ -805,6 +806,59 @@
             <p><strong>📝 Description:</strong> <span id="displayHeroSubtitle" style="color: #666;">-</span></p>
             <p><strong>🔘 Primary Button:</strong> <span id="displayHeroPrimaryButton" style="color: #666;">-</span></p>
             <p><strong>🔘 Secondary Button:</strong> <span id="displayHeroSecondaryButton" style="color: #666;">-</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Our Results Section -->
+      <div id="results" class="content-section">
+        <div class="admin-card">
+          <h2>🏆 Manage Student Results</h2>
+          <p style="color: #666; margin-bottom: 2rem;">Add and manage student success stories with photos, marks, and school details</p>
+
+          <!-- Add New Result -->
+          <div style="background: #f9f9f9; padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
+            <h3>➕ Add New Student Result</h3>
+            
+            <div class="form-group">
+              <label for="resultStudentName">Student Name *</label>
+              <input type="text" id="resultStudentName" placeholder="Enter student name" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label for="resultMarks">Marks/Score (%) *</label>
+                <input type="number" id="resultMarks" min="0" max="100" placeholder="95" required>
+              </div>
+
+              <div class="form-group">
+                <label for="resultBoard">Board/Exam Name</label>
+                <input type="text" id="resultBoard" placeholder="CBSE Class XII">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="resultSchool">School Name *</label>
+              <input type="text" id="resultSchool" placeholder="Enter school name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="resultStream">Stream/Subject</label>
+              <input type="text" id="resultStream" placeholder="Science / Arts / Commerce">
+            </div>
+
+            <div class="form-group">
+              <label for="resultPhoto">Student Photo (Image URL)</label>
+              <input type="text" id="resultPhoto" placeholder="https://example.com/photo.jpg">
+            </div>
+
+            <button class="admin-button" onclick="addStudentResult()" style="width: 100%; padding: 1rem;">➕ Add Student Result</button>
+          </div>
+
+          <!-- Results List -->
+          <h3 style="margin-top: 2rem; margin-bottom: 1rem;">📋 Current Student Results</h3>
+          <div id="resultsList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+            <p style="color: #999;">Loading results...</p>
           </div>
         </div>
       </div>

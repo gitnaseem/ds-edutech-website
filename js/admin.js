@@ -49,6 +49,8 @@ function showSection(sectionId) {
     loadContact();
   } else if (sectionId === 'hero') {
     loadHero();
+  } else if (sectionId === 'results') {
+    loadStudentResults();
   } else if (sectionId === 'settings') {
     loadSettingsDisplay();
   }
@@ -1732,6 +1734,218 @@ function applyAllSavedSectionStyles() {
   Object.keys(SECTION_STYLING_SELECTORS).forEach(section => {
     applySectionStyleToPage(section);
   });
+}
+
+// ===== STUDENT RESULTS MANAGEMENT =====
+
+// Load all student results for admin display
+function loadStudentResults() {
+  const resultsList = document.getElementById('resultsList');
+  if (!resultsList) return;
+  
+  // Get from localStorage (which syncs from Firebase)
+  let studentResults = JSON.parse(localStorage.getItem('studentResults')) || [];
+  
+  if (studentResults.length === 0) {
+    resultsList.innerHTML = '<p style="color: #999;">No student results added yet. Add one using the form above!</p>';
+    return;
+  }
+  
+  resultsList.innerHTML = studentResults.map((result, index) => `
+    <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+      ${result.photo ? `<img src="${result.photo}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 6px; margin-bottom: 1rem;">` : ''}
+      
+      <h4 style="margin: 0.5rem 0; color: #333;">${result.studentName || 'N/A'}</h4>
+      <p style="margin: 0.25rem 0; color: #666; font-size: 14px;">
+        <strong>📍 School:</strong> ${result.school || 'N/A'}
+      </p>
+      <p style="margin: 0.25rem 0; color: #666; font-size: 14px;">
+        <strong>📊 Marks:</strong> <span style="color: #4CAF50; font-weight: bold;">${result.marks}%</span>
+      </p>
+      <p style="margin: 0.25rem 0; color: #666; font-size: 14px;">
+        <strong>📚 Board:</strong> ${result.board || 'N/A'}
+      </p>
+      <p style="margin: 0.5rem 0; color: #666; font-size: 14px;">
+        <strong>🎓 Stream:</strong> ${result.stream || 'N/A'}
+      </p>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1rem;">
+        <button class="admin-button" onclick="editStudentResult(${index})" style="padding: 0.5rem; font-size: 13px;">✏️ Edit</button>
+        <button class="admin-button" onclick="deleteStudentResult(${index})" style="padding: 0.5rem; font-size: 13px; background: #ff6b6b;">🗑️ Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Add new student result
+function addStudentResult() {
+  const studentName = document.getElementById('resultStudentName')?.value?.trim();
+  const marks = document.getElementById('resultMarks')?.value;
+  const school = document.getElementById('resultSchool')?.value?.trim();
+  const board = document.getElementById('resultBoard')?.value?.trim();
+  const stream = document.getElementById('resultStream')?.value?.trim();
+  const photoUrl = document.getElementById('resultPhoto')?.value?.trim();
+  
+  // Validation
+  if (!studentName || !school || marks === '' || marks === null) {
+    showMessage('error', 'Please fill in all required fields (Name, School, Marks)');
+    return;
+  }
+  
+  if (marks < 0 || marks > 100) {
+    showMessage('error', 'Marks must be between 0 and 100');
+    return;
+  }
+  
+  // Create result object
+  const newResult = {
+    studentName,
+    marks: parseInt(marks),
+    school,
+    board: board || 'N/A',
+    stream: stream || 'N/A',
+    photo: photoUrl || '',
+    addedDate: new Date().toLocaleString()
+  };
+  
+  // Get existing results
+  let studentResults = JSON.parse(localStorage.getItem('studentResults')) || [];
+  
+  // Add new result
+  studentResults.push(newResult);
+  
+  // Save to localStorage (automatically syncs to Firebase)
+  localStorage.setItem('studentResults', JSON.stringify(studentResults));
+  
+  // Clear form
+  document.getElementById('resultStudentName').value = '';
+  document.getElementById('resultMarks').value = '';
+  document.getElementById('resultSchool').value = '';
+  document.getElementById('resultBoard').value = '';
+  document.getElementById('resultStream').value = '';
+  document.getElementById('resultPhoto').value = '';
+  
+  showMessage('success', `✓ ${studentName} added successfully!`);
+  
+  // Reload list
+  setTimeout(loadStudentResults, 500);
+}
+
+// Delete student result
+function deleteStudentResult(index) {
+  if (!confirm('Are you sure you want to delete this student result?')) {
+    return;
+  }
+  
+  let studentResults = JSON.parse(localStorage.getItem('studentResults')) || [];
+  const deletedName = studentResults[index]?.studentName || 'Unknown';
+  
+  // Remove from array
+  studentResults.splice(index, 1);
+  
+  // Save to localStorage
+  localStorage.setItem('studentResults', JSON.stringify(studentResults));
+  
+  showMessage('success', `✓ ${deletedName} removed successfully!`);
+  
+  // Reload list
+  setTimeout(loadStudentResults, 500);
+}
+
+// Edit student result (populate form)
+function editStudentResult(index) {
+  let studentResults = JSON.parse(localStorage.getItem('studentResults')) || [];
+  const result = studentResults[index];
+  
+  if (!result) {
+    showMessage('error', 'Result not found!');
+    return;
+  }
+  
+  // Populate form with existing data
+  document.getElementById('resultStudentName').value = result.studentName || '';
+  document.getElementById('resultMarks').value = result.marks || '';
+  document.getElementById('resultSchool').value = result.school || '';
+  document.getElementById('resultBoard').value = result.board || '';
+  document.getElementById('resultStream').value = result.stream || '';
+  document.getElementById('resultPhoto').value = result.photo || '';
+  
+  // Change button text to indicate editing
+  const addButton = document.querySelector('button[onclick="addStudentResult()"]');
+  const originalText = addButton.textContent;
+  addButton.textContent = '💾 Update Result';
+  
+  // Store editing index
+  window.editingResultIndex = index;
+  
+  // Change the onclick handler temporarily
+  addButton.onclick = function() {
+    updateStudentResult(index);
+  };
+  
+  // Show success message
+  showMessage('success', 'Editing mode - Update form and click "Update Result"');
+  
+  // Scroll to form
+  document.querySelector('input[id="resultStudentName"]').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Update existing student result
+function updateStudentResult(index) {
+  const studentName = document.getElementById('resultStudentName')?.value?.trim();
+  const marks = document.getElementById('resultMarks')?.value;
+  const school = document.getElementById('resultSchool')?.value?.trim();
+  const board = document.getElementById('resultBoard')?.value?.trim();
+  const stream = document.getElementById('resultStream')?.value?.trim();
+  const photoUrl = document.getElementById('resultPhoto')?.value?.trim();
+  
+  // Validation
+  if (!studentName || !school || marks === '' || marks === null) {
+    showMessage('error', 'Please fill in all required fields');
+    return;
+  }
+  
+  if (marks < 0 || marks > 100) {
+    showMessage('error', 'Marks must be between 0 and 100');
+    return;
+  }
+  
+  let studentResults = JSON.parse(localStorage.getItem('studentResults')) || [];
+  
+  // Update result
+  studentResults[index] = {
+    ...studentResults[index],
+    studentName,
+    marks: parseInt(marks),
+    school,
+    board: board || 'N/A',
+    stream: stream || 'N/A',
+    photo: photoUrl || '',
+    updatedDate: new Date().toLocaleString()
+  };
+  
+  // Save to localStorage
+  localStorage.setItem('studentResults', JSON.stringify(studentResults));
+  
+  // Reset form
+  document.getElementById('resultStudentName').value = '';
+  document.getElementById('resultMarks').value = '';
+  document.getElementById('resultSchool').value = '';
+  document.getElementById('resultBoard').value = '';
+  document.getElementById('resultStream').value = '';
+  document.getElementById('resultPhoto').value = '';
+  
+  // Reset button
+  const addButton = document.querySelector('button[onclick*="addStudentResult"]');
+  addButton.textContent = '➕ Add Student Result';
+  addButton.onclick = function() { addStudentResult(); };
+  
+  delete window.editingResultIndex;
+  
+  showMessage('success', `✓ ${studentName} updated successfully!`);
+  
+  // Reload list
+  setTimeout(loadStudentResults, 500);
 }
 
 // Initialize menu navigation on page load
