@@ -412,106 +412,47 @@
     function renderFeaturedClasses(courses) {
       if (!courses) courses = [];
       
-      // Get unique classes from courses
-      let classes = [];
-      if (courses && courses.length > 0) {
-        const uniqueClasses = new Set();
-        courses.forEach(course => {
-          if (course.category) {
-            uniqueClasses.add(course.category);
-          }
-        });
-        classes = Array.from(uniqueClasses);
-      }
-      
-      // Sort classes in correct order
-      const classOrder = ['9th Class', '10th Class', '11th Class', '12th Class'];
-      classes = classes.filter(c => classOrder.includes(c)).sort((a, b) => {
-        return classOrder.indexOf(a) - classOrder.indexOf(b);
-      });
-      
-      // Create featured section with courses grouped by class
       const container = document.getElementById('featuredClassesContainer');
-      let html = '';
       
-      const classIcons = {
-        '9th Class': '🎓',
-        '10th Class': '📖',
-        '11th Class': '🚀',
-        '12th Class': '🏆'
-      };
-      
-      const classDescriptions = {
-        '9th Class': 'Foundation level courses covering basics of all subjects',
-        '10th Class': 'Board exam preparation with comprehensive course materials',
-        '11th Class': 'Stream-specific courses for Science, Arts, and Commerce',
-        '12th Class': 'Final year preparation with advanced topics and exam practice'
-      };
-      
-      // Build HTML for each class with its courses
-      classes.forEach(className => {
-        const coursesInClass = courses.filter(c => c.category === className);
-        
-        html += `
-          <div style="margin-bottom: 3rem;">
-            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-              <span style="font-size: 2rem;">${classIcons[className] || '📚'}</span>
-              <div>
-                <h3 style="margin: 0; color: var(--primary-color);">${className}</h3>
-                <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">${classDescriptions[className]}</p>
-              </div>
-            </div>
-        `;
-        
-        if (coursesInClass.length === 0) {
-          html += `
-            <div style="padding: 2rem; background-color: var(--light-color); border-radius: 8px; text-align: center; color: #999;">
-              <p>No courses available for this class yet. Check back soon!</p>
-            </div>
-          `;
-        } else {
-          html += `
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%;">
-          `;
-          
-          coursesInClass.forEach(course => {
-            const imageContent = course.image 
-              ? `<img src="${course.image}" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0;">`
-              : `<div style="width: 100%; height: 180px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; border-radius: 8px 8px 0 0;"><span style="font-size: 3rem;">📚</span></div>`;
-            
-            html += `
-              <div class="course-card" style="display: flex; flex-direction: column; min-width: 0;">
-                ${imageContent}
-                <div class="course-content" style="flex: 1; display: flex; flex-direction: column;">
-                  <span class="course-level">${course.level}</span>
-                  <h4 style="margin: 0.8rem 0 0.5rem 0; color: #333;">${course.title}</h4>
-                  <p style="margin: 0; font-size: 0.9rem; color: #666; line-height: 1.5; flex: 1;">${course.description}</p>
-                  <div class="course-meta" style="margin-top: 1rem;">
-                    <span>📚 ${course.videos} Videos</span>
-                    <span>⏱️ ${course.hours} Hours</span>
-                  </div>
-                  <button class="btn-learn" style="margin-top: 1rem; width: 100%;">Learn More</button>
-                </div>
-              </div>
-            `;
-          });
-          
-          html += `</div>`;
-        }
-        
-        html += `</div>`;
-      });
-      
-      // If no classes have courses, show message
-      if (classes.length === 0) {
-        html = `
-          <div style="padding: 3rem; text-align: center; color: #999;">
+      if (!courses || courses.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 3rem; color: #999;">
             <p style="font-size: 1.1rem;">🚀 Exciting courses coming soon!</p>
             <p>Our expert team is preparing comprehensive courses for all classes.</p>
           </div>
         `;
+        return;
       }
       
+      // Create a simple grid displaying all courses like the results section
+      let html = `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">`;
+      
+      courses.forEach(course => {
+        const imageContent = course.image 
+          ? `<img src="${course.image}" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px 8px 0 0;">`
+          : `<div style="width: 100%; height: 180px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; border-radius: 8px 8px 0 0;"><span style="font-size: 3rem;">📚</span></div>`;
+        
+        html += `
+          <div class="course-card">
+            ${imageContent}
+            <div class="course-content">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span class="course-level">${course.level}</span>
+                <span style="background-color: var(--light-color); color: var(--primary-color); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">${course.category}</span>
+              </div>
+              <h4 style="margin: 0.5rem 0; color: #333; font-size: 1.1rem;">${course.title}</h4>
+              <p style="margin: 0.8rem 0; font-size: 0.9rem; color: #666; line-height: 1.5;">${course.description}</p>
+              <div class="course-meta" style="margin-top: 1rem; display: flex; justify-content: space-between; padding-top: 1rem; border-top: 1px solid #eee;">
+                <span style="font-size: 0.85rem; color: #999;">📚 ${course.videos} Videos</span>
+                <span style="font-size: 0.85rem; color: #999;">⏱️ ${course.hours} Hours</span>
+              </div>
+              <button class="btn-learn" style="margin-top: 1rem; width: 100%;">Learn More</button>
+            </div>
+          </div>
+        `;
+      });
+      
+      html += `</div>`;
       container.innerHTML = html;
     }
 
